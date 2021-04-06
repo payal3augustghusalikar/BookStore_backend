@@ -29,7 +29,9 @@ module.exports = () => {
             ],
         }),
         database: {
-            dbURI: `mongodb+srv://${process.env.HOST}/${process.env.fundooNotes}`,
+            username: process.env.COUCHBASE_USERNAME,
+            password: process.env.COUCHBASE_PASSWORD,
+            dbURL: process.env.DB_URL
         },
     };
 };

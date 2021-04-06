@@ -28,17 +28,12 @@ module.exports = () => {
             ],
         }),
 
-        redisClientConfig: {
-            redisEndPoint: process.env.REDIS_HOST,
-            port: process.env.REDIS_PORT,
-            flushRedisOnServerRestart: true,
-        },
         database: {
             mongodb: {
-                // MONGODB_URL=mongodb://localhost:27017/fundooNotes
-                dbURI: `mongodb+srv://${process.env.HOST}/${process.env.fundooNotes}`,
 
-                // dbURL: process.env.MONGODB_URL,
+                username: process.env.COUCHBASE_USERNAME,
+                password: process.env.COUCHBASE_PASSWORD,
+                dbURL: process.env.DB_URL
             },
         },
     };

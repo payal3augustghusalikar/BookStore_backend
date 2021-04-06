@@ -1,14 +1,50 @@
 //const config = require('.').get();
+// const config = require('.').get();
+// require(`dotenv`).config();
+// var couchbase = require('couchbase')
 
-var couchbase = require('couchbase')
+// var cluster = new couchbase.Cluster(config.database.dbURL);
 
-const cluster = new couchbase.Cluster("couchbase://localhost", {
-    username: process.env.COUCHBASE_USERNAME,
-    password: process.env.COUCHBASE_PASSWOPRD
+// cluster.authenticate(config.database.username, config.database.password);
+
+// var bucket = cluster.openBucket('user', function(err) {
+//     if (err) {
+//         console.error('Got error: ', err);
+//     }
+// });
+
+// var N1qlQuery = couchbase.N1qlQuery;
+
+// module.exports = {
+//     N1qlQuery,
+//     bucket
+// };
+
+
+
+const config = require('.').get();
+var couchbase = require('couchbase');
+
+var cluster = new couchbase.Cluster(config.database.dbURL
+    /* , {
+        username: config.database.username,
+        password: config.database.password,
+    } */
+);
+console.log("cluster", cluster)
+cluster.authenticate(config.database.username, config.database.password);
+var bucket = cluster.openBucket('user', (err) => {
+    if (err) {
+        console.error('Got error : ', err);
+    }
 });
 
-// get a reference to our bucket
-const bucket = cluster.bucket("Books");
 
-// get a reference to the default collection
-const collection = bucket.defaultCollection();
+var N1qlQuery = couchbase.N1qlQuery;
+//var collection = bucket.collection();
+
+module.exports = {
+    //collection: collection,
+    userBucket: bucket,
+    N1qlQuery: N1qlQuery
+};
