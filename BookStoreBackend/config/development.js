@@ -13,7 +13,7 @@ const winston = require("winston");
  */
 module.exports = () => {
     return {
-        port: process.env.PORT || 2001,
+        port: process.env.PORT || 4000,
         logger: winston.createLogger({
             format: winston.format.json(),
             transports: [
@@ -29,12 +29,12 @@ module.exports = () => {
         }),
 
         database: {
-            mongodb: {
 
-                username: process.env.COUCHBASE_USERNAME,
-                password: process.env.COUCHBASE_PASSWORD,
-                dbURL: process.env.DB_URL
-            },
+
+            username: process.env.COUCHBASE_USERNAME,
+            password: process.env.COUCHBASE_PASSWORD,
+            dbURL: process.env.DB_URL
+
         },
     };
 };
