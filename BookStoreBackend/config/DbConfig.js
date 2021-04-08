@@ -1,6 +1,7 @@
 const config = require('.').get();
 var couchbase = require('couchbase');
 var N1qlQuery = couchbase.N1qlQuery;
+
 // var cluster = new couchbase.Cluster(config.database.dbURL
 //     /* , {
 //         username: config.database.username,
