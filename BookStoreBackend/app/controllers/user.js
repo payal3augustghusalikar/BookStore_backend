@@ -51,7 +51,7 @@ class userController {
                         res.send({
                             status_code: status.Success,
                             message: "user added successfully please verify your mail!",
-                            data: data,
+                            //data: data,
                         });
                 });
             }

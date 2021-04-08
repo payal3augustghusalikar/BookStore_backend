@@ -17,4 +17,12 @@ module.exports = (app) => {
     // register a new user
     app.post("/admin-register", helper.verifyRole('admin'), user.register);
 
+    // user login
+    app.post('/user-login', user.login);
+
+    // admin login
+    app.post('/admin-login', user.login);
+
+
+
 };

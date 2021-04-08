@@ -104,23 +104,77 @@
 // module.exports = new UserModel();
 
 
-const bucket = require('../../server').bucket
-const uuid = require('uuid').v4
+
+
+
+// const bucket = require('../../server').bucket
+// const uuid = require('uuid').v4
+
+// class UserModel {
+//     save = (userData, callBack) => {
+//         console.log('Userdata', userData)
+//         const id = uuid()
+//         bucket.collection().insert(id, userData, (error, result) => {
+//             if (error) {
+
+//                 console.log("error", error)
+//                 return callBack(error, null)
+//             } else {
+//                 console.log("result", result)
+//                 return callBack(null, result)
+//             }
+//         })
+//     }
+// }
+
+
+const userBucket = require('../../config/dbConfig').userBucket;
+const N1qlQuery = require('../../config/dbConfig').N1qlQuery;
+const uuid = require('uuid').v4;
+const config = require('../../config').get();
+const { logger } = config;
 
 class UserModel {
+    /**
+     * @description saving user/admin data into buckets
+     *  @method insert is used to save data into bucket
+     */
     save = (userData, callBack) => {
-        console.log('Userdata', userData)
-        const id = uuid()
-        bucket.collection().insert(id, userData, (error, result) => {
-            if (error) {
+        logger.info('creating unique id');
 
-                console.log("error", error)
-                return callBack(error, null)
-            } else {
-                console.log("result", result)
-                return callBack(null, result)
-            }
-        })
+        const id = uuid();
+        const query = 'SELECT * FROM `user` WHERE emailId=' + '"' + userData.emailId + '"';
+        // userBucket.query(
+        //     N1qlQuery.fromString(query), (err, rows) => {
+        //         if (err) {
+        //             console.log("err", err)
+        //             return callBack(err, null);
+        //         } else if (rows.length != 0) {
+        //             return callBack(new Error('ERR-409'), null);
+        //         } else
+        console.log("userData", userData)
+        userBucket.collection().insert(id, userData, (error, result) => {
+            return error ? callBack(error, null) : callBack(null, result);
+        });
+        // });
     }
+
+    /**
+     * @description finding user for login
+     */
+    findOne = async(userData, callBack) => {
+        console.log("userdata", userData)
+        var query = N1qlQuery.fromString('SELECT meta().id, * FROM `user` WHERE emailId=' + '"' + userData.emailId + '"');
+        await userBucket.query(query, (error, rows) => {
+            return (error) ? callBack(error, null) : callBack(null, rows);
+        });
+    }
+
+
+
 }
+
+
+
+
 module.exports = new UserModel();
