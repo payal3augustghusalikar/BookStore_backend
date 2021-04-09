@@ -12,10 +12,10 @@ module.exports = (app) => {
     const user = require("../controllers/user.js");
 
     // register a new user
-    app.post("/user-register", helper.verifyRole('user'), user.register);
+    app.post("/user-register", helper.addRole('user'), user.register);
 
     // register a new user
-    app.post("/admin-register", helper.verifyRole('admin'), user.register);
+    app.post("/admin-register", helper.addRole('admin'), user.register);
 
     // user login
     app.post('/user-login', user.login);

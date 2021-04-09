@@ -24,7 +24,7 @@ class Helper {
      * @param {*} res
      * @param {*} next
      */
-    verifyRole = (role) => {
+    addRole = (role) => {
         console.log("verify user")
         return (req, res, next) => {
             req.role = role;
@@ -63,6 +63,27 @@ class Helper {
         return token;
     }
 
+
+    verifyRole = (req, res, next) => {
+        logger.info('Verifying role');
+        const token = req.headers.token;
+        if (token === undefined) {
+            logger.error('Incorrect token or token is expired');
+            return res.status(401).send({ success: false, message: 'Incotrrect token or token is expired' });
+        }
+
+        return jwt.verify(token, process.env.SECRET_LOGIN_TOKEN, (error, decodeData) => {
+            if (error) {
+                logger.error('Incorrect token or token is expired');
+                return res.status(401).send({ success: false, message: 'Incorrect token or token is expired' });
+            } else if (decodeData.role != 'Admin') {
+                logger.error('Authorization failed');
+                return res.status(401).send({ success: false, message: 'Authorization failed' });
+            }
+            req.decodeData = decodeData;
+            next();
+        });
+    }
 
 }
 

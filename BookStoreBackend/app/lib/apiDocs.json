@@ -1,0 +1,191 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Book-Store",
+        "description": "APIs"
+    },
+    "host": "localhost:4000",
+    "basePath": "/",
+    "tags": [{
+            "name": "User",
+            "description": "API for User"
+        },
+        {
+            "name": "Books",
+            "description": "API for Book"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/userRegistration": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User registration",
+                "parameters": [{
+                    "name": "registration",
+                    "in": "body",
+                    "description": "User registration",
+                    "schema": {
+                        "$ref": "#/definitions/registration"
+                    }
+                }],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registration is done successfully",
+                        "schema": {
+                            "$ref": "#/definitions/registration"
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User login",
+                "parameters": [{
+                    "name": "user login",
+                    "in": "body",
+                    "description": "User login",
+                    "schema": {
+                        "$ref": "#/definitions/login"
+                    }
+                }],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfuuly logged in !",
+                        "schema": {
+                            "$ref": "#/definitions/login"
+                        }
+                    }
+                }
+            }
+        },
+        "/book": {
+
+            "post": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Add book",
+                "parameters": [{
+                        "name": "token",
+                        "in": "header",
+                        "description": "token"
+                    },
+                    {
+                        "name": "book",
+                        "in": "body",
+                        "description": "Add book",
+                        "schema": {
+                            "$ref": "#/definitions/book"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "added book !",
+                        "schema": {
+                            "$ref": "#/definitions/book"
+                        }
+                    }
+                }
+            }
+        }
+
+    },
+    "definitions": {
+        "registration": {
+            "required": [
+                "fullname",
+                "emailId",
+                "password",
+                "mobileNumber"
+            ],
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "emailId": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "confirmPassword": {
+                    "type": "string"
+                }
+            }
+        },
+        "login": {
+            "required": [
+                "emailId",
+                "password"
+            ],
+            "properties": {
+                "emailId": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "book": {
+            "required": [
+                "title",
+                "author",
+                "quantity",
+                "price"
+            ],
+            "properties": {
+                "title": {
+                    "in": "body",
+                    "type": "string"
+                },
+                "description": {
+                    "in": "body",
+                    "type": "string"
+                },
+                "author": {
+                    "in": "body",
+                    "type": "string"
+                },
+                "quantity": {
+                    "in": "body",
+                    "type": "string"
+                },
+                "price": {
+                    "in": "body",
+                    "type": "string"
+                }
+
+            }
+        }
+    }
+}

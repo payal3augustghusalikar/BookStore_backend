@@ -36,10 +36,9 @@ var bookBucket = cluster.bucket('books', (err) => {
 
 
 //userBucket.enableN1ql('localhost' + ":8093")
-//var collection = bucket.collection();
+
 
 module.exports = {
-    //collection: collection,
     userBucket: userBucket,
     bookBucket: bookBucket,
     N1qlQuery: N1qlQuery
