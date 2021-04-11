@@ -12,7 +12,7 @@ const app = express();
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 
-
+var jwt = require('jsonwebtoken');
 // require("../config").set(process.env.NODE_ENV, app);
 // const config = require("../config").get();
 

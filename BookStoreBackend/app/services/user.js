@@ -10,6 +10,9 @@
 const User = require("../models/user.js");
 const helper = require("../../middleware/helper.js");
 const bcrypt = require("bcrypt");
+const config = require('../../config').get();
+
+const { logger } = config;
 class userService {
     /**
      * @description register and save User then send response to controller
