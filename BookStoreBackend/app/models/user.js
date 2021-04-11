@@ -18,46 +18,81 @@ class UserModel {
      * @method insert is used to save data into bucket
      */
     save = (userData, callback) => {
-        const id = uuid();
-        // const query = 'SELECT * FROM `user` WHERE emailId=' + '"' + userData.emailId + '"';
-        // userBucket.query(
-        //     N1qlQuery.fromString(query), (err, rows) => {
-        //         if (err) {
-        //             console.log("err", err)
-        //             return callback(err, null);
-        //         } else if (rows.length != 0) {
-        //             return callback(new Error('ERR-409'), null);
-        //         } else
-        console.log("userData", userData)
-        userBucket.collection().insert(id, userData, (error, result) => {
+      // console.log("model", userData)
+      //   const id = uuid();
+      //   const query = 'SELECT * FROM `user` WHERE emailId=' + '"' + userData.emailId + '"';
+      //   userBucket.query(
+      //       N1qlQuery.fromString(query), (err, rows) => {
+      //           if (err) {
+      //               console.log("err", err)
+      //               return callback(err, null);
+      //           } else if (rows.length != 0) {
+      //               return callback(new Error('ERR-409'), null);
+      //           } else
+      //   console.log("userData", userData)
+      //   userBucket.collection().insert(id, userData, (error, result) => {
+      //       return error ? callback(error, null) : callback(null, result);
+      //   });
+      //    });
+
+  console.log("model", userData)
+      const id = uuid();
+    const query = 'SELECT * FROM `user` WHERE emailId=' + '"' + userData.emailId + '"';
+    userBucket.query(
+      N1qlQuery.fromString(query), (err, rows) => {
+        if (err) {
+          console.log("err ", err)
+          return callback(err, null);
+        }
+        
+        else if (rows.length != 0) {
+          console.log( "rows ",rows)
+          return callback(new Error('ERR-409'), null);
+        }
+        else
+          userBucket.insert(id, userData, (error, result) => {
+            console.log("result fron cb", result)
             return error ? callback(error, null) : callback(null, result);
-        });
-        // });
+          });
+      });
     }
 
-    /**
-     * @description finding user for login
-     */
-    findOne = async(userData, callback) => {
-        console.log("userdata", userData)
-            // var query = N1qlQuery.fromString('SELECT meta().id, * FROM `user` WHERE emailId=' + '"' + userData.emailId + '"');
-            // await userBucket.query(query, (error, rows) => {
-            //     return (error) ? callback(error, null) : callback(null, rows);
-            // });
+    // /**
+    //  * @description finding user for login
+    //  */
+    // findOne = async(userData, callback) => {
+    //     console.log("userdata", userData)
+    //         // var query = N1qlQuery.fromString('SELECT meta().id, * FROM `user` WHERE emailId=' + '"' + userData.emailId + '"');
+    //         // await userBucket.query(query, (error, rows) => {
+    //         //     return (error) ? callback(error, null) : callback(null, rows);
+    //         // });
 
-        console.log("userData.emailId", userData.emailId)
-        console.log("userData.emailId.toString()", userData.emailId.toString())
-        userBucket.get(userData.emailId.toString(), async(error, user) => {
-            if (error) {
-                console.log("err", error)
-                return callback(error, null);
-            } else if (user.length == 0) {
-                console.log("user", user)
-                return callback(null, user);
-            }
-        })
-    }
+    //     console.log("userData.emailId", userData.emailId)
+    //     console.log("userData.emailId.toString()", userData.emailId.toString())
+    //     userBucket.get(userData.emailId.toString(), async(error, user) => {
+    //         if (error) {
+    //             console.log("err", error)
+    //             return callback(error, null);
+    //         } else if (user.length == 0) {
+    //             console.log("user", user)
+    //             return callback(null, user);
+    //         }
+    //     })
+    // }
 
+
+     /**
+   * @description finding user for login
+   */
+  findOne = async (userData, callback) => {
+    console.log("userdata", userData)
+    var query = N1qlQuery.fromString('SELECT meta().id, * FROM `user` WHERE emailId=' + '"' + userData.emailId + '"');
+   console.log('query', query)
+    await userBucket.query(query, (error, rows) => {
+      console.log('rows', rows)
+      return (error) ? callback(error, null) : callback(null, rows);
+    });
+  }
 
 
 }

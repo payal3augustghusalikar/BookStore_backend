@@ -12,6 +12,10 @@
             "description": "API for User"
         },
         {
+            "name": "Admin",
+            "description": "API for Admin"
+        },
+        {
             "name": "Books",
             "description": "API for Book"
         }
@@ -26,7 +30,7 @@
         "application/json"
     ],
     "paths": {
-        "/userRegistration": {
+        "/user-register": {
             "post": {
                 "tags": [
                     "User"
@@ -53,7 +57,35 @@
                 }
             }
         },
-        "/login": {
+
+        "/admin-register": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "admin registration",
+                "parameters": [{
+                    "name": "registration",
+                    "in": "body",
+                    "description": "admin registration",
+                    "schema": {
+                        "$ref": "#/definitions/registration"
+                    }
+                }],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Registration is done successfully",
+                        "schema": {
+                            "$ref": "#/definitions/registration"
+                        }
+                    }
+                }
+            }
+        },
+        "/user-login": {
             "post": {
                 "tags": [
                     "User"
@@ -63,6 +95,33 @@
                     "name": "user login",
                     "in": "body",
                     "description": "User login",
+                    "schema": {
+                        "$ref": "#/definitions/login"
+                    }
+                }],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfuuly logged in !",
+                        "schema": {
+                            "$ref": "#/definitions/login"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin-login": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "admin login",
+                "parameters": [{
+                    "name": "admin login",
+                    "in": "body",
+                    "description": "admin login",
                     "schema": {
                         "$ref": "#/definitions/login"
                     }

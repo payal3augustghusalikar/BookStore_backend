@@ -11,16 +11,16 @@ require('./config').set(process.env.NODE_ENV, app);
 // get config
 const config = require('./config').get();
 
-// require cors
+//require cors
 var cors = require('cors');
 app.use(cors());
 
 // require user routes
 require('./app/routes/user')(app);
 
-require swagger - ui and swagger.json
+//require swagger - ui and swagger.json
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./app/lib/api-docs.json');
+const swaggerDocument = require('./app/lib/apiDocs.json');
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

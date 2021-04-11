@@ -17,6 +17,7 @@ class userController {
      */
     register = (req, res) => {
         try {
+            console.log("cntr")
             let confirmPassword = req.body.confirmPassword;
             let password = req.body.password;
             if (password !== confirmPassword) {
@@ -45,12 +46,11 @@ class userController {
                     return error ?
                         res.send({
                             success: false,
-                            status_code: status.Internal_Server_Error,
-                            message: error.message,
+                            status_code: status.Internal_Server_Error +error
                         }) :
                         res.send({
                             status_code: status.Success,
-                            message: "user added successfully please verify your mail!",
+                            message: "user added successfully !!",
                             //data: data,
                         });
                 });
@@ -75,6 +75,7 @@ class userController {
      * @method login is service class method
      */
     login = (req, res) => {
+        console.log("ctrl", req)
         try {
             const userLoginData = {
                 emailId: req.body.emailId,
@@ -87,6 +88,7 @@ class userController {
             // }
 
             userService.login(userLoginData, (error, data) => {
+                console.log("data login", data)
                 if (error) {
                     logger.error(error.message);
                     if (error.message.includes('401'))

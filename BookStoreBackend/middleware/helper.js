@@ -12,8 +12,9 @@ const app = express();
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 
-require("../config").set(process.env.NODE_ENV, app);
-const config = require("../config").get();
+
+// require("../config").set(process.env.NODE_ENV, app);
+// const config = require("../config").get();
 
 
 class Helper {
