@@ -80,7 +80,29 @@ class BookController {
         }
     }
 
-
+    findAllBooks = (req, res) => {
+        try{
+            const userId = req.decodeData.userId;
+            bookService.getBooks(userId, (error, data) => {
+                if(error) {
+                    // logger.error(error.message);
+                    // if(error.message.includes('401'))
+                       // return res.status(401).send({ success: false, message: error.message });
+                    return res.status(500).send({ success: false, message: error.message });
+                }
+                else if(data.length == 0){
+                    logger.error('Books not found');
+                    return res.status(404).send({ success: false, message: 'Books not found' });
+                }
+                logger.info('Successfully retrieved books !');
+                return res.status(200).send({ success: true, message: 'Successfully retrieved books !', data: data});
+            });
+        }
+        catch(error){
+            logger.error('Some error occurred !');
+			res.status(500).send({ success: false, message: 'Some error occurred !'+ error });
+        }
+    }
 }
 
 

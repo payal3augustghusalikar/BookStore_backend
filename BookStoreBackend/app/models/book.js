@@ -33,6 +33,25 @@ class BookModel {
             }
         });
     }
+
+
+
+    getBooks = async (userId, callback) => {
+        console.log("ss")
+        await userBucket.get(userId.toString(), async (error, user) => {
+            if (error)
+                return callback(error, null);
+            else if (user.length == 0)
+                return callback(new Error('ERR-401'), null);
+            else {
+                logger.info('retrieving books');
+                await bookBucket.query(
+                    N1qlQuery.fromString('SELECT * FROM `books`'), (err, rows) => {
+                        return (err) ? callback(err, null) : callback(null, rows);
+                    });
+            }
+        });
+    }
 }
 
 

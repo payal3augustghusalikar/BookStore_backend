@@ -17,5 +17,7 @@ console.log("book route");
       app.post('/book', helper.verifyRole, 
         book.addBook
       ); 
+ // get books
+ app.get('/books', helper.verifyToken, book.findAllBooks);
 
 };

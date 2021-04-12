@@ -93,6 +93,26 @@ class Helper {
         });
     }
 
+
+
+
+    verifyToken = (req, res, next) => {
+        const token =   req.headers.authorization.split(" ")[1];
+		if (token === undefined) {
+			logger.error('Incorrect token or token is expired');
+			return res.status(401).send({ success: false, message: 'Incorrect token or token is expired' });
+		}
+	
+		return jwt.verify(token, process.env.SECRET_KEY, (error, decodeData) => {
+        if (error) {
+				logger.error('Incorrect token or token is expired');
+				return res.status(401).send({ success: false, message: 'Incorrect token or token is expired' });
+			}
+            req.decodeData = decodeData;
+			next();
+		});
+	}
+
 }
 
 module.exports = new Helper();
