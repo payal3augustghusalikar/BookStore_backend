@@ -10,7 +10,12 @@ var helper = require("../../middleware/helper.js");
 const book = require("../controllers/book.js");
 
 module.exports = (app) => {
-
-    app.post('/book', helper.verifyRole, book.addBook);
+console.log("book route");
+    // app.post('/book', helper.verifyRole,  function(req, res){
+    //     book.addBook
+    //   }); 
+      app.post('/book', helper.verifyRole, 
+        book.addBook
+      ); 
 
 };

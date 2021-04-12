@@ -7,12 +7,20 @@
 -----------------------------------------------------------------------------------------------*/
 
 var helper = require("../../middleware/helper.js");
+//const {body, checkSchema, validationResult} = require('express-validator');
+//let vallidator = require("../../middleware/vallidation.js");
+const user = require("../controllers/user.js");
+
+const book = require("../controllers/book.js");
+
+   
+    
 
 module.exports = (app) => {
-    const user = require("../controllers/user.js");
-console.log("routes")
+  
+console.log("routes");
     // register a new user
-    app.post("/user-register", helper.addRole('user'), user.register);
+    app.post("/user-register", helper.addRole('user'),  user.register);
 
     // register a new user
     app.post("/admin-register", helper.addRole('admin'), user.register);
@@ -23,6 +31,8 @@ console.log("routes")
     // admin login
     app.post('/admin-login', user.login);
 
-
+    app.post('/book', helper.verifyRole, 
+            book.addBook
+          );
 
 };

@@ -6,10 +6,18 @@
 -----------------------------------------------------------------------------------------------*/
 
 const userService = require("../services/user.js");
-//let vallidator = require("../../middleware/vallidation.js");
+let vallidator = require("../../middleware/vallidation.js");
 const status = require("../../middleware/staticFile.json");
 const config = require('../../config').get();
 const { logger } = config;
+const {body, checkSchema, validationResult} = require('express-validator');
+
+
+
+
+
+
+
 class userController {
     /**
      * @description register and save a new user
@@ -18,6 +26,7 @@ class userController {
     register = (req, res) => {
         try {
             console.log("cntr")
+
             let confirmPassword = req.body.confirmPassword;
             let password = req.body.password;
             if (password !== confirmPassword) {
@@ -27,6 +36,7 @@ class userController {
                     message: "Password not match",
                 });
             } else {
+               
                 const userInfo = {
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
@@ -34,6 +44,8 @@ class userController {
                     password: password,
                     role: req.role
                 };
+console.log("check")
+
                 // const validation = vallidator.validate(userInfo);
                 // return validation.error ?
                 //     res.send({
@@ -41,19 +53,39 @@ class userController {
                 //         status_code: status.Bad_Request,
                 //         message: validation.error.message,
                 //     }) :
+//  checkSchema(registrationSchema);
+//  const errors = validationResult(req);
+// console.log("errors", errors)
+// console.log("!errors.isEmpty()", !errors.isEmpty())
+
+//     if (!errors.isEmpty()) {
+
+//         return res.status(400).json({
+//             errors: errors.array()
+//         });
+
+
+//  const validation = vallidator.registerValidation(userInfo);
+//                 return validation.error ?
+//                     res.send({
+//                         success: false,
+//                         status_code: status.Bad_Request,
+//                         message: validation.error.message,
+//                     }) :
+  
                 userService.register(userInfo, (error, data) => {
                     console.log("data", data)
                     return error ?
                         res.send({
                             success: false,
-                            status_code: status.Internal_Server_Error +error
+                            status_code: status.Internal_Server_Error +error.message
                         }) :
                         res.send({
                             status_code: status.Success,
                             message: "user added successfully !!",
                             //data: data,
                         });
-                });
+                })
             }
         } catch (error) {
             logger.error("Some error occurred while creating user");

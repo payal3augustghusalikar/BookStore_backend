@@ -1,3 +1,11 @@
+const userBucket = require('../../config/dbConfig').userBucket;
+const bookBucket = require('../../config/dbConfig').bookBucket;
+const N1qlQuery = require('../../config/dbConfig').N1qlQuery;
+const uuid = require('uuid').v4;
+const config = require('../../config').get();
+const { logger } = config;
+
+
 class BookModel {
     /**
      * @description saving book into buckets

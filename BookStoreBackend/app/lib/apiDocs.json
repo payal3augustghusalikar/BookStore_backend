@@ -146,11 +146,9 @@
                     "Books"
                 ],
                 "summary": "Add book",
-                "parameters": [{
-                        "name": "token",
-                        "in": "header",
-                        "description": "token"
-                    },
+                "parameters": 
+                [
+                   
                     {
                         "name": "book",
                         "in": "body",
@@ -171,10 +169,23 @@
                         }
                     }
                 }
+                ,"security": [{
+                    "JWT": []
+                }],
+                "deprecated": false
             }
         }
 
     },
+
+    "securityDefinitions": {
+        "JWT": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    },
+
     "definitions": {
         "registration": {
             "required": [

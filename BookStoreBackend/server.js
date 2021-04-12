@@ -15,8 +15,7 @@ const config = require('./config').get();
 var cors = require('cors');
 app.use(cors());
 
-// require user routes
-require('./app/routes/user')(app);
+
 
 //require swagger - ui and swagger.json
 const swaggerUi = require('swagger-ui-express');
@@ -24,10 +23,18 @@ const swaggerDocument = require('./app/lib/apiDocs.json');
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// If no routes matches execute this 
-app.use('*', (req, res) => {
-    res.status(404).send({ success: false, message: 'Route Not found' });
-});
+// // If no routes matches 
+// app.use('*', (req, res) => {
+//     res.status(404).send({ success: false, message: 'Route Not found' });
+// });
+
+
+
+// require user routes
+require('./app/routes/user')(app);
+
+// require book routes
+require('./app/routes/books')(app);
 
 /**
  * @description listen for requests

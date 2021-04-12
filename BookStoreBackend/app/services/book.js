@@ -5,10 +5,11 @@ class Bookservice {
      * @method save is a model class method
      */
     addBook = (bookData, callback) => {
-        bookModel.save(bookData, (error, data) => {
+        console.log("ser")
+       return bookModel.save(bookData, (error, data) => {
             return (error) ? callback(error, null) : callback(null, data);
         });
     }
 }
 
-ports = new Bookservice();
+module.exports = new Bookservice();

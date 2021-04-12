@@ -10,13 +10,13 @@
 const express = require("express");
 const app = express();
 const bcrypt = require("bcrypt");
+
 require("dotenv").config();
 
 var jwt = require('jsonwebtoken');
 // require("../config").set(process.env.NODE_ENV, app);
-// const config = require("../config").get();
-
-
+ const config = require("../config").get();
+ const { logger } = config;
 class Helper {
 
     /**
@@ -66,18 +66,25 @@ class Helper {
 
 
     verifyRole = (req, res, next) => {
-        logger.info('Verifying role');
-        const token = req.headers.token;
+     
+        console.log("verify")
+
+     //   const token = req.headers.token;
+        const token =   req.headers.authorization.split(" ")[1];
+
+        console.log("token", token)
+       // console.log("token1", token1)
         if (token === undefined) {
             logger.error('Incorrect token or token is expired');
-            return res.status(401).send({ success: false, message: 'Incotrrect token or token is expired' });
+            return res.status(401).send({ success: false, message: 'Incorrect token or token is expired' });
         }
 
-        return jwt.verify(token, process.env.SECRET_LOGIN_TOKEN, (error, decodeData) => {
+        return jwt.verify(token, process.env.SECRET_KEY, (error, decodeData) => {
             if (error) {
                 logger.error('Incorrect token or token is expired');
-                return res.status(401).send({ success: false, message: 'Incorrect token or token is expired' });
-            } else if (decodeData.role != 'Admin') {
+                return res.status(401).send({ success: false, message: 'Incorrect token or token is expiredd ', error });
+            } else if (decodeData.role != 'admin') {
+                console.log("decodeData", decodeData)
                 logger.error('Authorization failed');
                 return res.status(401).send({ success: false, message: 'Authorization failed' });
             }

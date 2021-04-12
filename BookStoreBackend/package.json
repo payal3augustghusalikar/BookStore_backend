@@ -15,6 +15,7 @@
         "couchbase": "^2.6.12",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
+        "express-validator": "^6.10.0",
         "jsonwebtoken": "^8.5.1",
         "ottoman": "^2.0.0-alpha.14",
         "swagger-ui-express": "^4.1.6",
