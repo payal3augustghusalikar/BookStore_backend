@@ -28,8 +28,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 //     res.status(404).send({ success: false, message: 'Route Not found' });
 // });
 
-
-
 // require user routes
 require('./app/routes/user')(app);
 

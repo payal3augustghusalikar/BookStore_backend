@@ -5,7 +5,7 @@ class Bookservice {
      * @method save is a model class method
      */
     addBook = (bookData, callback) => {
-        console.log("ser")
+    
        return bookModel.save(bookData, (error, data) => {
             return (error) ? callback(error, null) : callback(null, data);
         });

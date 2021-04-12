@@ -12,12 +12,6 @@ const config = require('../../config').get();
 const { logger } = config;
 const {body, checkSchema, validationResult} = require('express-validator');
 
-
-
-
-
-
-
 class userController {
     /**
      * @description register and save a new user
@@ -25,7 +19,6 @@ class userController {
      */
     register = (req, res) => {
         try {
-            console.log("cntr")
 
             let confirmPassword = req.body.confirmPassword;
             let password = req.body.password;
@@ -44,37 +37,8 @@ class userController {
                     password: password,
                     role: req.role
                 };
-console.log("check")
-
-                // const validation = vallidator.validate(userInfo);
-                // return validation.error ?
-                //     res.send({
-                //         success: false,
-                //         status_code: status.Bad_Request,
-                //         message: validation.error.message,
-                //     }) :
-//  checkSchema(registrationSchema);
-//  const errors = validationResult(req);
-// console.log("errors", errors)
-// console.log("!errors.isEmpty()", !errors.isEmpty())
-
-//     if (!errors.isEmpty()) {
-
-//         return res.status(400).json({
-//             errors: errors.array()
-//         });
-
-
-//  const validation = vallidator.registerValidation(userInfo);
-//                 return validation.error ?
-//                     res.send({
-//                         success: false,
-//                         status_code: status.Bad_Request,
-//                         message: validation.error.message,
-//                     }) :
-  
                 userService.register(userInfo, (error, data) => {
-                    console.log("data", data)
+                   
                     return error ?
                         res.send({
                             success: false,
@@ -83,7 +47,7 @@ console.log("check")
                         res.send({
                             status_code: status.Success,
                             message: "user added successfully !!",
-                            //data: data,
+                        
                         });
                 })
             }
@@ -100,27 +64,17 @@ console.log("check")
     };
 
 
-
-
     /**
      * @description User login API
      * @method login is service class method
      */
     login = (req, res) => {
-        console.log("ctrl", req)
         try {
             const userLoginData = {
                 emailId: req.body.emailId,
                 password: req.body.password
-            };
-
-            // const validationResult = loginValidator.validate(userLoginData);
-            // if (validationResult.error) {
-            // 	return res.status(400).send({ success: false, message: validationResult.error.message });
-            // }
-
+            }
             userService.login(userLoginData, (error, data) => {
-                console.log("data login", data)
                 if (error) {
                     logger.error(error.message);
                     if (error.message.includes('401'))

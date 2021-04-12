@@ -18,7 +18,7 @@ const book = require("../controllers/book.js");
 
 module.exports = (app) => {
   
-console.log("routes");
+
     // register a new user
     app.post("/user-register", helper.addRole('user'),  user.register);
 

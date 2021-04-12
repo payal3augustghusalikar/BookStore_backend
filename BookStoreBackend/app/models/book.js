@@ -37,7 +37,7 @@ class BookModel {
 
 
     getBooks = async (userId, callback) => {
-        console.log("ss")
+       
         await userBucket.get(userId.toString(), async (error, user) => {
             if (error)
                 return callback(error, null);

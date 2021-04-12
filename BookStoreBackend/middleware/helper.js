@@ -26,7 +26,6 @@ class Helper {
      * @param {*} next
      */
     addRole = (role) => {
-        console.log("verify user")
         return (req, res, next) => {
             req.role = role;
             next();
@@ -35,17 +34,11 @@ class Helper {
 
 
     encryptPassword = (password, callback) => {
-        console.log("encryptPassword user", password)
-            //if (this.isModified("password")) {
         bcrypt.hash(password, 10, (err, hash) => {
                 if (err)
                     return callback(err, null);
                 return callback(null, hash);
             })
-            // console.log("encryptPassword user new", password)
-            // return password
-            //  this.confirmPassword = undefined;
-            // }
     }
 
     /**
@@ -66,14 +59,7 @@ class Helper {
 
 
     verifyRole = (req, res, next) => {
-     
-        console.log("verify")
-
-     //   const token = req.headers.token;
         const token =   req.headers.authorization.split(" ")[1];
-
-        console.log("token", token)
-       // console.log("token1", token1)
         if (token === undefined) {
             logger.error('Incorrect token or token is expired');
             return res.status(401).send({ success: false, message: 'Incorrect token or token is expired' });
@@ -84,7 +70,6 @@ class Helper {
                 logger.error('Incorrect token or token is expired');
                 return res.status(401).send({ success: false, message: 'Incorrect token or token is expiredd ', error });
             } else if (decodeData.role != 'admin') {
-                console.log("decodeData", decodeData)
                 logger.error('Authorization failed');
                 return res.status(401).send({ success: false, message: 'Authorization failed' });
             }
@@ -112,6 +97,35 @@ class Helper {
 			next();
 		});
 	}
+
+
+
+
+    findAllBooks = (req, res) => {
+        try{
+            const userId = req.decodeData.userId;
+            bookService.getBooks(userId, (error, data) => {
+                if(error) {
+                    logger.error(error.message);
+                    if(error.message.includes('401'))
+                        return res.status(401).send({ success: false, message: error.message });
+                    return res.status(500).send({ success: false, message: error.message });
+                }
+                else if(data.length == 0){
+                    logger.error('Books not found');
+                    return res.status(404).send({ success: false, message: 'Books not found' });
+                }
+                logger.info('Successfully retrieved books !');
+                return res.status(200).send({ success: true, message: 'Successfully retrieved books !', data: data});
+            });
+        }
+        catch(error){
+            logger.error('Some error occurred !');
+			res.status(500).send({ success: false, message: 'Some error occurred !' });
+        }
+    }
+
+
 
 }
 

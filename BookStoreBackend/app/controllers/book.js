@@ -21,7 +21,7 @@ class BookController {
      * 
      */
     addBook = (req, res) => {
-        console.log("ctrl")
+      
         try {
             const bookData = {
                 author: req.body.author,
@@ -30,27 +30,7 @@ class BookController {
                 price: req.body.price,
                 description: req.body.description,
                 adminId: req.decodeData.userId
-            };
-            // const validationResult = validator.validate(bookData);
-            // if (validationResult.error) {
-            // 	return res.status(400).send({ success: false, message: validationResult.error.message });
-            // }
-            //     bookService.addBook(bookData, (error, data) => {
-            //         if (error) {
-            //            // logger.error(error.message);
-            //             return res.status(500).send({ success: false, message: error.message });
-            //         } else if (data.length == 0) {
-            //           //  logger.error('Authorization failed');
-            //             return res.status(401).send({ success: false, message: 'Authorization failed' });
-            //         }
-            //        // logger.info('added book!');
-            //         return res.status(200).send({ success: true, message: 'book is added successfully!' });
-            //     });
-            // } catch (error) {
-            //     logger.error('Some error occurred !');
-            //     res.status(500).send({ success: false, message: 'Some error occurred !'+ error });
-            // }
-
+            }
 
             bookService.addBook(bookData)
                 .then((data) => {
@@ -85,9 +65,6 @@ class BookController {
             const userId = req.decodeData.userId;
             bookService.getBooks(userId, (error, data) => {
                 if(error) {
-                    // logger.error(error.message);
-                    // if(error.message.includes('401'))
-                       // return res.status(401).send({ success: false, message: error.message });
                     return res.status(500).send({ success: false, message: error.message });
                 }
                 else if(data.length == 0){

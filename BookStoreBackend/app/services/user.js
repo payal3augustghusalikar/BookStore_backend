@@ -20,7 +20,6 @@ class userService {
      * @param callback is the callback for controller
      */
     register = (userInfo, callback) => {
-        console.log("model", userInfo)
 
         helper.encryptPassword(userInfo.password,
             (error, encryptedPassword) => {
@@ -29,7 +28,7 @@ class userService {
                     throw new Error('Error while encrypting password');
                 }
                 userInfo.password = encryptedPassword;
-console.log("encryptedPassword", encryptedPassword)
+
                 User.save(userInfo, (error, data) => {
                     if (error) return callback(error, null);
                     else {
@@ -42,9 +41,9 @@ console.log("encryptedPassword", encryptedPassword)
 
 
     login = (userLoginData, callback) => {
-        console.log("ser")
+      
         User.findOne(userLoginData, (error, data) => {
-            console.log("data", data)
+         
             if (error) {
                 logger.error('ERR:500-Some error occured while logging in');
                 return callback(new Error('ERR:401-Authorization failed'), null);

@@ -86,8 +86,6 @@ const {
 
 class vallidation {
 
-
-
     name(name) {
          check(name)
             .isLength({
