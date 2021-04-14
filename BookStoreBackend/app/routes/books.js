@@ -8,14 +8,18 @@
 
 var helper = require("../../middleware/helper.js");
 const book = require("../controllers/book.js");
-
+const {
+  bookValidationRules,
+  validate
+} = require('../../middleware/vallidation')
 module.exports = (app) => {
-      app.post('/book', helper.verifyRole, 
-        book.addBook
-      ); 
+  app.post('/book', helper.verifyRole, bookValidationRules(), validate, book.addBook);
 
- app.get('/books', helper.verifyToken, book.findAllBooks);
- app.put('/book/:bookId', helper.verifyToken, book.update);
- app.delete('/book/:bookId', helper.verifyToken, book.delete);
- app.put('/book/addtobag/:bookId', helper.verifyToken, book.addToBag);
+  app.get('/books', helper.verifyToken, book.findAllBooks);
+
+  app.put('/book/:bookId', helper.verifyToken, bookValidationRules(), validate, book.update);
+
+  app.delete('/book/:bookId', helper.verifyToken, book.delete);
+
+  app.put('/book/addtobag/:bookId', helper.verifyToken, book.addToBag);
 };

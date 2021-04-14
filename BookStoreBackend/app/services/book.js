@@ -28,25 +28,18 @@ class Bookservice {
         });
     }
 
-
     updateBook = (bookData, callback) => {
        return bookModel.update(bookData, (error, data) => {
             return (error) ? callback(error, null) : callback(null, data);
         });
     }
 
-  
+
     deleteBook = (bookData, callback) => {
-   
       return bookModel.delete(bookData, (error, data) => {
         return (error) ? callback(error, null) : callback(null, data);
     })
-    
-    
     }
-
-
-
 
     addToBag =  async(bookData) => {
         console.log("ser")

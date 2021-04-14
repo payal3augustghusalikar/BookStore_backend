@@ -8,22 +8,18 @@
 
 var helper = require("../../middleware/helper.js");
 //const {body, checkSchema, validationResult} = require('express-validator');
+const { userValidationRules, validate } = require('../../middleware/vallidation')
 //let vallidator = require("../../middleware/vallidation.js");
 const user = require("../controllers/user.js");
-
-const book = require("../controllers/book.js");
-
-   
-    
 
 module.exports = (app) => {
   
 
     // register a new user
-    app.post("/user-register", helper.addRole('user'),  user.register);
+    app.post("/user-register", helper.addRole('user'), userValidationRules(), validate, user.register);
 
     // register a new user
-    app.post("/admin-register", helper.addRole('admin'), user.register);
+    app.post("/admin-register", helper.addRole('admin'), userValidationRules(), validate, user.register);
 
     // user login
     app.post('/user-login', user.login);
