@@ -17,4 +17,5 @@ module.exports = (app) => {
  app.get('/books', helper.verifyToken, book.findAllBooks);
  app.put('/book/:bookId', helper.verifyToken, book.update);
  app.delete('/book/:bookId', helper.verifyToken, book.delete);
+ app.put('/book/addtobag/:bookId', helper.verifyToken, book.addToBag);
 };

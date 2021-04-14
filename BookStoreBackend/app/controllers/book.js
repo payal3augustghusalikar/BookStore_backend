@@ -166,7 +166,8 @@ class BookController {
 				quantity: req.body.quantity,
                 price: req.body.price,
                 description: req.body.description,
-                adminId: req.decodeData.userId
+                adminId: req.decodeData.userId,
+                addedToBag: false
             };
           
             // const validation = ControllerDataValidation.validate(bookData);
@@ -192,7 +193,7 @@ class BookController {
                         logger.info("book updated successfully !"),
                         res.send({
                             message: "book updated successfully !",
-                            data: data,
+                           data: data,
                         })
                     );
                 });
@@ -263,6 +264,50 @@ class BookController {
                     message: "Could not delete book with id " + error + req.params.bookId,
                 })
             );
+        }
+    };
+
+
+
+    addToBag = (req, res) => {
+        try {
+            console.log("ctrl")
+            const addToBagData = {
+                bookId: req.params.bookId, 
+                adminId: req.decodeData.userId,
+              //  isAddedToBag : true
+            };
+            bookService
+                .addToBag(addToBagData)
+                .then((data) => {
+                    if (!data) {
+                        res.send({
+                            success: false,
+                            status_code: status.Not_Found,
+                            message: "book not found with id : " + req.params.bookId + error,
+                        });
+                    }
+                    res.send({
+                     
+                        status: status.Success,
+                        message: " added to bag successfully !",
+                      //  data: data,
+                    });
+                })
+                .catch((error) => {
+                    res.send({
+                      
+                        status: status.Internal_Server_Error,
+                        message: "Some error occurred while adding to bag" + error,
+                    });
+                });
+        } catch (error) {
+            logger.error("Some error occurred while adding to bag"),
+                res.send({
+                 
+                    status: status.Internal_Server_Error,
+                    message: "Some error occurred while adding to bag" + error,
+                });
         }
     };
 }

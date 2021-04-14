@@ -41,13 +41,27 @@ class Bookservice {
     }
 
   
-    deleteBook = async (bookData) => {
+    deleteBook = async (bookData, callback) => {
         console.log("ser")
        const data =await bookModel.delete(bookData)
        console.log("data", data)
-       return data
+    
         // , (error, data) => {
         //    console.log("err,", error)
+        //     return (error) ? callback(error, null) : callback(null, data);
+        // });
+    }
+
+
+
+
+    addToBag =  async(bookData) => {
+        console.log("ser")
+       const data = await bookModel.addToBag(bookData)
+       console.log("data", data)
+        return data
+        
+        // => {
         //     return (error) ? callback(error, null) : callback(null, data);
         // });
     }

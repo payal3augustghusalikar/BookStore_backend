@@ -97,39 +97,83 @@ class BookModel {
     }
 
 
-    // delete = async (bookData, callback) => {
-    //     console.log("mdl")
-    //     console.log("bookData.adminId", bookData.adminId.toString())
-    //     return userBucket.get(bookData.adminId, async (error, user) => {
-    //         if (error)
-    //             return callback(error, null);
-    //         else if (user.length == 0)
-    //             return callback(new Error('ERR-401'), null);
-    //         else {
+    delete = async (bookData, callback) => {
+        console.log("mdl")
+        console.log("bookData.adminId", bookData.adminId.toString())
+        userBucket.get(bookData.adminId)
+        if (error)
+            return callback(error, null);
+        else if (user.length == 0)
+            return callback(new Error('ERR-401 not found'), null);
+        else {
 
-    //         await bookBucket.get(bookData.bookId, (error, books) => {
-    //             // if (error)
-    //             //     return callback(error, null);
-    //             // else if (books.length == 0)
-    //             //     return callback(null, books);
-    //             // else {
-    //                 const data = bookBucket.remove(bookData.bookId, callback )
-    //                 return data 
-    //                     // (error, result) => {
-    //                     // return error ? callback(error, null) : callback(null, result);
-    //                 });
-    //           //  }
-    //         //});
-    //          }
+            await bookBucket.get(bookData.bookId)
+            if (error)
+                return callback(error, null);
+            else if (books.length == 0)
+                return callback(null, books);
+            else {
+                const data = bookBucket.remove(bookData.bookId)
+                return data
 
-    //     });
-    delete = (bookData) => {
-        return userBucket.get(bookData.adminId)
-            .then(bookBucket.get(bookData.bookId))
-            .then( bookBucket.remove(bookData.bookId))
+            }
+
+        }
+
     }
+    // delete = (bookData) => {
+    //      userBucket.get(bookData.adminId)
+    //         .then(bookBucket.get(bookData.bookId))
+    //         .then( bookBucket.remove(bookData.bookId))
+    // }
 
+
+    addToBag = async (userData) => {
+
+        // return Note.findById(collaborator.noteId).then((noteData) => {
+        //     if (!noteData.collaborator.includes(collaborator.collaboratorId)) {
+        //         return Note.findByIdAndUpdate(
+        //             collaborator.noteId, {
+        //                 $push: {
+        //                     collaborator: collaborator.collaboratorId,
+        //                 },
+        //             }, { new: true }
+        //         );
+        //     }
+
+console.log("mdl")
+console.log("bookid, ", userData.adminId)
+        return bookBucket.get(userData.adminId).then((user) => {
+            if (user) {
+                console.log("bookid, ", userData.bookId)
+                var query = N1qlQuery.fromString('UPDATE my `books` SET isAddedToBag = true WHERE meta().id =' + '"' + userData.bookId + '"');
+                const rows =  userBucket.query(query)
+
+                console.log("rows", rows)
+                return rows
+
+            }
+        }).catch((error) => {
+                   return res.send({
+                        status: status.Internal_Server_Error,
+                        message: "Some error occurred while adding to bag...." + error,
+                    });
+                });
+    }
 }
+
+// if 
+// var query = N1qlQuery.fromString('SELECT meta().id, * FROM `user` WHERE emailId=' + '"' + userData.emailId + '"');
+// var query = N1qlQuery.fromString('UPDATE my `books` SET isAddedToBag = true WHERE meta().id =' +'"' + userData.bookId + '"');
+// const rows = await userBucket.query(query, callback)
+
+// console.log("rows",rows)
+// return rows
+//             (error, rows) => {
+// console.log("rows",rows)
+//             return (error) ? callback(error, null) : callback(null, rows);
+//         });
+
 
 
 

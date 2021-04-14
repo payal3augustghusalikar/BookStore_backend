@@ -236,126 +236,157 @@
                 }],
                 "deprecated": false
             },
+            
 
+                "delete": {
+                    "tags": [
+                        "Books"
+                    ],
+                    "summary": "delete book",
+                    "parameters": [
 
+                        {
+                            "name": "id",
+                            "in": "path",
+                            "required": true,
+                            "description": "delete book using id"
 
+                        }
+                    ],
+                    "produces": [
+                        "application/json"
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": " book deleted successfully!"
 
-            "delete": {
-                "tags": [
-                    "Books"
-                ],
-                "summary": "delete book",
-                "parameters": [
-
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "description": "delete book using id"
-                       
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": " book deleted successfully!"
-
-                    }
-                },
-                "security": [{
-                    "JWT": []
-                }],
-                "deprecated": false
-            }
-        }
-    },
-
-
-    "securityDefinitions": {
-        "JWT": {
-            "type": "apiKey",
-            "name": "Authorization",
-            "in": "header"
-        }
-    },
-
-    "definitions": {
-        "registration": {
-            "required": [
-                "firstName",
-                "lastName",
-                "emailId",
-                "password",
-                "mobileNumber"
-            ],
-            "properties": {
-                "firstName": {
-                    "type": "string"
-                },
-                "lastName": {
-                    "type": "string"
-                },
-                "emailId": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "confirmPassword": {
-                    "type": "string"
+                        }
+                    },
+                    "security": [{
+                        "JWT": []
+                    }],
+                    "deprecated": false
                 }
+            },
+            "/book/addtobag/{id}": {
+
+                "put": {
+                    "tags": [
+                        "Books"
+                    ],
+                    "summary": "update book",
+                    "parameters": [
+
+                        {
+                            "name": "id",
+                            "in": "path",
+                            "required": true,
+                            "description": "update book using id"
+                        }
+
+                    ],
+                    "produces": [
+                        "application/json"
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "book added to bag successfully!"
+
+                        }
+                    },
+                    "security": [{
+                        "JWT": []
+                    }],
+                    "deprecated": false
+                }
+            }
+
+        },
+
+
+        "securityDefinitions": {
+            "JWT": {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header"
             }
         },
-        "login": {
-            "required": [
-                "emailId",
-                "password"
-            ],
-            "properties": {
-                "emailId": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "book": {
-            "required": [
-                "title",
-                "author",
-                "quantity",
-                "price"
-            ],
-            "properties": {
-                "title": {
-                    "in": "body",
-                    "type": "string"
-                },
-                "description": {
-                    "in": "body",
-                    "type": "string"
-                },
-                "author": {
-                    "in": "body",
-                    "type": "string"
-                },
-                "quantity": {
-                    "in": "body",
-                    "type": "string"
-                },
-                "image": {
-                    "in": "body",
-                    "type": "string"
-                },
-                "price": {
-                    "in": "body",
-                    "type": "string"
-                }
 
+        "definitions": {
+            "registration": {
+                "required": [
+                    "firstName",
+                    "lastName",
+                    "emailId",
+                    "password",
+                    "mobileNumber"
+                ],
+                "properties": {
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "emailId": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "confirmPassword": {
+                        "type": "string"
+                    }
+                }
+            },
+            "login": {
+                "required": [
+                    "emailId",
+                    "password"
+                ],
+                "properties": {
+                    "emailId": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "book": {
+                "required": [
+                    "title",
+                    "author",
+                    "quantity",
+                    "price"
+                ],
+                "properties": {
+                    "title": {
+                        "in": "body",
+                        "type": "string"
+                    },
+                    "description": {
+                        "in": "body",
+                        "type": "string"
+                    },
+                    "author": {
+                        "in": "body",
+                        "type": "string"
+                    },
+                    "quantity": {
+                        "in": "body",
+                        "type": "string"
+                    },
+                    "image": {
+                        "in": "body",
+                        "type": "string"
+                    },
+                    "price": {
+                        "in": "body",
+                        "type": "string"
+                    }
+
+                }
             }
         }
     }
-}
