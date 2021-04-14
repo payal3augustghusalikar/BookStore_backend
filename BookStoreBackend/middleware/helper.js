@@ -124,9 +124,6 @@ class Helper {
 			res.status(500).send({ success: false, message: 'Some error occurred !' });
         }
     }
-
-
-
 }
 
 module.exports = new Helper();

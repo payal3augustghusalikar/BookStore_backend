@@ -31,8 +31,5 @@ module.exports = (app) => {
     // admin login
     app.post('/admin-login', user.login);
 
-    app.post('/book', helper.verifyRole, 
-            book.addBook
-          );
-
+    
 };

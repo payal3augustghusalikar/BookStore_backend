@@ -1,22 +1,55 @@
 const bookModel = require('../models/book');
+
 class Bookservice {
+
+    /**
+     * @description calling model class method to add new book to book store
+     * @method save is model class method
+     * @param {*} bookData holds book information
+     * @param {*} callback 
+     * @returns callback function
+     */
+    addBook =  async (bookData, callback) => {
+
+        const data = await bookModel.save(bookData, callback)
+        return data
+        //     , (error, data) => {
+        //     return (error) ? callback(error, null) : callback(null, data);
+        // });
+    }
+
+
     /**
      * @description add new book to bookstore
-     * @method save is a model class method
+     *  @method getBooks is a model class method
+     *  @param userId contains admin information
      */
-    addBook = (bookData, callback) => {
-    
-       return bookModel.save(bookData, (error, data) => {
+    getBooks = (userId, callback) => {
+        console.log("ser")
+        bookModel.getBooks(userId, (error, data) => {
+            console.log("data", data)
             return (error) ? callback(error, null) : callback(null, data);
         });
     }
 
 
-
-    getBooks = (userId, callback) => {
-        bookModel.getBooks(userId, (error, data) => {
+    updateBook = (bookData, callback) => {
+        console.log("ser")
+       return bookModel.update(bookData, (error, data) => {
             return (error) ? callback(error, null) : callback(null, data);
         });
+    }
+
+  
+    deleteBook = async (bookData) => {
+        console.log("ser")
+       const data =await bookModel.delete(bookData)
+       console.log("data", data)
+       return data
+        // , (error, data) => {
+        //    console.log("err,", error)
+        //     return (error) ? callback(error, null) : callback(null, data);
+        // });
     }
 }
 

@@ -29,6 +29,7 @@ class BookController {
                 quantity: req.body.quantity,
                 price: req.body.price,
                 description: req.body.description,
+                image: req.body.image,
                 adminId: req.decodeData.userId
             }
 
@@ -36,7 +37,6 @@ class BookController {
                 .then((data) => {
                     logger.info("Book added successfully !"),
                         res.send({
-                            success: true,
                             status: status.Success,
                             message: "Book added successfully !",
                             data: data,
@@ -45,7 +45,6 @@ class BookController {
                 .catch((error) => {
                     logger.error("Some error occurred while creating Book", +error),
                         res.send({
-                            success: false,
                             status: status.Internal_Server_Error,
                             message: "Some error occurred while creating Book",
                         });
@@ -53,7 +52,6 @@ class BookController {
         } catch (error) {
             logger.error("Some error occurred while creating Book"),
                 res.send({
-                    success: false,
                     status: status.Internal_Server_Error,
                     message: "Some error occurred while creating Book" + error,
                 });
@@ -71,6 +69,7 @@ class BookController {
                     logger.error('Books not found');
                     return res.status(404).send({ success: false, message: 'Books not found' });
                 }
+                console.log("data1", data)
                 logger.info('Successfully retrieved books !');
                 return res.status(200).send({ success: true, message: 'Successfully retrieved books !', data: data});
             });
@@ -80,6 +79,192 @@ class BookController {
 			res.status(500).send({ success: false, message: 'Some error occurred !'+ error });
         }
     }
+
+
+
+    /**
+     * @message Update book by id
+     * @method update is service class method
+     * @param res is used to send the response
+     */
+     update = (req, res) => {
+         console.log("ctrl")
+        // try {
+        //     const bookInfo = {
+        //         bookID: req.params.bookId,
+		// 		author: req.body.author,
+		// 		title: req.body.title,
+		// 		image: req.body.image,
+		// 		quantity: req.body.quantity,
+        //         price: req.body.price,
+        //         description: req.body.description,
+        //         adminId: req.decodeData.userId
+        //     };
+        //     // const validation = namePattern.validate(bookInfo.name);
+        //     // console.log(validation);
+        //     // return validation.error ?
+        //     //     res.send({
+        //     //         success: false,
+        //     //         status: status.Bad_Request,
+        //     //         message: "please enter valid details" + validation.error,
+        //     //     }) :
+        //     bookService
+        //         .updateBook(bookInfo)
+        //         .then((data) => {
+        //             !data
+        //                 ?
+        //                 (logger.warn(
+        //                         "book not found with id : " + req.params.bookId
+        //                     ),
+        //                     res.send({
+        //                         status_code: status.Not_Found,
+        //                         message: "book not found",
+        //                     })) :
+        //                 logger.info("book updated successfully !"),
+        //                 res.send({
+        //                     status_code: status.Success,
+        //                     message: "book updated successfully !",
+        //                     data: data,
+        //                 });
+        //             // this.findAll();
+        //         })
+        //         .catch((error) => {
+        //             logger.error(
+        //                     "Error updating book with id : " + req.params.bookId
+        //                 ),
+        //                 res.send({
+        //                     status_code: status.Unauthorized,
+        //                     message: "Error updating book",
+        //                 });
+        //         });
+        // } catch (error) {
+        //     return (
+        //         error.kind === "ObjectId" ?
+        //         (logger.error("book not found with id " + req.params.bookId),
+        //             res.send({
+        //                 status_code: status.Not_Found,
+        //                 message: "book not found ",
+        //             })) :
+        //         logger.error("Error updating book with id " + req.params.bookId),
+        //         res.send({
+        //             status_code: status.Internal_Server_Error,
+        //             message: "Error updating book",
+        //         })
+        //     );
+        // }
+
+
+
+
+
+        try {
+                const bookInfo = {
+                bookId: req.params.bookId,
+				author: req.body.author,
+				title: req.body.title,
+				image: req.body.image,
+				quantity: req.body.quantity,
+                price: req.body.price,
+                description: req.body.description,
+                adminId: req.decodeData.userId
+            };
+          
+            // const validation = ControllerDataValidation.validate(bookData);
+            // return validation.error ?
+            //     res.status(400).send({
+            //         success: false,
+            //         message: "please enter valid details " + validation.error,
+            //     }) :
+                bookService.updateBook(bookInfo, (error, data) => {
+                    return (
+                        error ?
+                        (logger.error("Error updating book with id : " + req.params.bookId),
+                            res.send({
+                                status_code: status.Internal_Server_Error,
+                                message: "Error updating book with id : " + req.params.bookId +error,
+                            })) :
+                        !data ?
+                        (logger.warn("book not found with id : " + req.params.bookId +error),
+                            res.send({
+                                status_code: status.Not_Found,
+                                message: "book not found with id : " + req.params.bookId +error,
+                            })) :
+                        logger.info("book updated successfully !"),
+                        res.send({
+                            message: "book updated successfully !",
+                            data: data,
+                        })
+                    );
+                });
+        } catch (error) {
+            return (
+                error.kind === "ObjectId" ?
+                (logger.error("book not found with id "+error + req.params.bookId),
+                    res.send({
+                        status_code: status.Not_Found,
+                        message: "book not found with id "+error + req.params.bookId,
+                    })) :
+                logger.error("Error updating book with id "+error + req.params.bookId),
+                res.send({
+                    status_code: status.Internal_Server_Error,
+                    message: "Error updating book with id "+error + req.params.bookId,
+                })
+            );
+        }
+    };
+
+
+
+
+    /**
+     * @message Update book with id
+     * @method delete is service class method
+     * @param response is used to send the response
+     */
+    delete = async(req, res) => {
+        console.log("ctrl")
+        try {
+            const bookData = {
+                bookId: req.params.bookId,
+                adminId: req.decodeData.userId
+			};
+            console.log("bookid", req.params.bookId)
+            let data = await bookService.deleteBook(bookData);
+            !data
+                ? 
+                (logger.warn("book not found with id " + req.params.bookId),
+                    res.send({
+                        status_code: status.Not_Found,
+                        message: "book not found with id "+ req.params.bookId,
+                    })) :
+                res.send({
+                    status_code: status.Success,
+                    message: "book deleted successfully!",
+                });
+            error(
+                logger.warn("book not found with id" + req.params.bookId),
+                res.send({
+                    status_code: status.Not_Found,
+                    message: "book not found with id " + req.params.bookId,
+                }) 
+            )
+                
+        } catch (error) {
+            return (
+                error.kind === "ObjectId" || error.name === "NotFound" ?
+                (logger.error("could not found book with id" + req.params.bookId),
+                    res.send({
+                        status_code: status.Not_Found,
+                        message: "book not found with id" + error + req.params.bookId,
+                    })) :
+                logger.error("Could not delete book with id" + error + req.params.bookId),
+                res.send({
+                    status_code: status.Internal_Server_Error,
+                    message: "Could not delete book with id " + error + req.params.bookId,
+                })
+            );
+        }
+    };
 }
 
 

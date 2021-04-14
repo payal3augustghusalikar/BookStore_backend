@@ -15,5 +15,6 @@ module.exports = (app) => {
       ); 
 
  app.get('/books', helper.verifyToken, book.findAllBooks);
-
+ app.put('/book/:bookId', helper.verifyToken, book.update);
+ app.delete('/book/:bookId', helper.verifyToken, book.delete);
 };

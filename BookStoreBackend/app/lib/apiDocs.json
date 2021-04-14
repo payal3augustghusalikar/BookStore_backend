@@ -146,9 +146,8 @@
                     "Books"
                 ],
                 "summary": "Add book",
-                "parameters": 
-                [
-                   
+                "parameters": [
+
                     {
                         "name": "book",
                         "in": "body",
@@ -168,8 +167,8 @@
                             "$ref": "#/definitions/book"
                         }
                     }
-                }
-                ,"security": [{
+                },
+                "security": [{
                     "JWT": []
                 }],
                 "deprecated": false
@@ -181,13 +180,46 @@
                 "tags": [
                     "Books"
                 ],
-                "summary": "Add book",
-                "parameters": 
-                [
-                   
+                "summary": "get all books",
+                "description": "get books",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "found All books !"
+                    }
+                },
+                "security": [{
+                    "JWT": []
+                }],
+                "deprecated": false
+            }
+        }
+
+        ,
+        "/book/{id}": {
+
+            "put": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "update book",
+                "parameters": [
+
                     {
-                        "description": "get books"
-                    
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "update book using id"
+                    },
+                    {
+                        "name": "book",
+                        "in": "body",
+                        "description": "update book using id",
+                        "schema": {
+                            "$ref": "#/definitions/book"
+                        }
                     }
                 ],
                 "produces": [
@@ -195,18 +227,51 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "found All books !"
+                        "description": "update book successfully!"
+
+                    }
+                },
+                "security": [{
+                    "JWT": []
+                }],
+                "deprecated": false
+            },
+
+
+
+
+            "delete": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "delete book",
+                "parameters": [
+
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "delete book using id"
                        
                     }
-                }
-                ,"security": [{
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": " book deleted successfully!"
+
+                    }
+                },
+                "security": [{
                     "JWT": []
                 }],
                 "deprecated": false
             }
         }
-
     },
+
 
     "securityDefinitions": {
         "JWT": {
@@ -219,7 +284,8 @@
     "definitions": {
         "registration": {
             "required": [
-                "fullname",
+                "firstName",
+                "lastName",
                 "emailId",
                 "password",
                 "mobileNumber"
@@ -277,6 +343,10 @@
                     "type": "string"
                 },
                 "quantity": {
+                    "in": "body",
+                    "type": "string"
+                },
+                "image": {
                     "in": "body",
                     "type": "string"
                 },
