@@ -1,5 +1,4 @@
 const bookService = require('../services/book.js');
-
 const userService = require("../services/user.js");
 let vallidator = require("../../middleware/vallidation.js");
 const status = require("../../middleware/staticFile.json");
@@ -69,7 +68,7 @@ class BookController {
                     logger.error('Books not found');
                     return res.status(404).send({ success: false, message: 'Books not found' });
                 }
-                console.log("data1", data)
+              
                 logger.info('Successfully retrieved books !');
                 return res.status(200).send({ success: true, message: 'Successfully retrieved books !', data: data});
             });
@@ -88,75 +87,7 @@ class BookController {
      * @param res is used to send the response
      */
      update = (req, res) => {
-         console.log("ctrl")
-        // try {
-        //     const bookInfo = {
-        //         bookID: req.params.bookId,
-		// 		author: req.body.author,
-		// 		title: req.body.title,
-		// 		image: req.body.image,
-		// 		quantity: req.body.quantity,
-        //         price: req.body.price,
-        //         description: req.body.description,
-        //         adminId: req.decodeData.userId
-        //     };
-        //     // const validation = namePattern.validate(bookInfo.name);
-        //     // console.log(validation);
-        //     // return validation.error ?
-        //     //     res.send({
-        //     //         success: false,
-        //     //         status: status.Bad_Request,
-        //     //         message: "please enter valid details" + validation.error,
-        //     //     }) :
-        //     bookService
-        //         .updateBook(bookInfo)
-        //         .then((data) => {
-        //             !data
-        //                 ?
-        //                 (logger.warn(
-        //                         "book not found with id : " + req.params.bookId
-        //                     ),
-        //                     res.send({
-        //                         status_code: status.Not_Found,
-        //                         message: "book not found",
-        //                     })) :
-        //                 logger.info("book updated successfully !"),
-        //                 res.send({
-        //                     status_code: status.Success,
-        //                     message: "book updated successfully !",
-        //                     data: data,
-        //                 });
-        //             // this.findAll();
-        //         })
-        //         .catch((error) => {
-        //             logger.error(
-        //                     "Error updating book with id : " + req.params.bookId
-        //                 ),
-        //                 res.send({
-        //                     status_code: status.Unauthorized,
-        //                     message: "Error updating book",
-        //                 });
-        //         });
-        // } catch (error) {
-        //     return (
-        //         error.kind === "ObjectId" ?
-        //         (logger.error("book not found with id " + req.params.bookId),
-        //             res.send({
-        //                 status_code: status.Not_Found,
-        //                 message: "book not found ",
-        //             })) :
-        //         logger.error("Error updating book with id " + req.params.bookId),
-        //         res.send({
-        //             status_code: status.Internal_Server_Error,
-        //             message: "Error updating book",
-        //         })
-        //     );
-        // }
-
-
-
-
-
+        
         try {
                 const bookInfo = {
                 bookId: req.params.bookId,
@@ -167,15 +98,9 @@ class BookController {
                 price: req.body.price,
                 description: req.body.description,
                 adminId: req.decodeData.userId,
-                addedToBag: false
+              //  addedToBag: false
             };
           
-            // const validation = ControllerDataValidation.validate(bookData);
-            // return validation.error ?
-            //     res.status(400).send({
-            //         success: false,
-            //         message: "please enter valid details " + validation.error,
-            //     }) :
                 bookService.updateBook(bookInfo, (error, data) => {
                     return (
                         error ?
@@ -223,13 +148,13 @@ class BookController {
      * @param response is used to send the response
      */
     delete = async(req, res) => {
-        console.log("ctrl")
+    
         try {
             const bookData = {
                 bookId: req.params.bookId,
                 adminId: req.decodeData.userId
 			};
-            console.log("bookid", req.params.bookId)
+         
             let data = await bookService.deleteBook(bookData);
             !data
                 ? 
@@ -271,7 +196,7 @@ class BookController {
 
     addToBag = (req, res) => {
         try {
-            console.log("ctrl")
+           
             const addToBagData = {
                 bookId: req.params.bookId, 
                 adminId: req.decodeData.userId,

@@ -9,13 +9,11 @@ class Bookservice {
      * @param {*} callback 
      * @returns callback function
      */
-    addBook =  async (bookData, callback) => {
-
-        const data = await bookModel.save(bookData, callback)
-        return data
-        //     , (error, data) => {
-        //     return (error) ? callback(error, null) : callback(null, data);
-        // });
+      addBook = (bookData, callback) => {
+        console.log("ser")
+       return bookModel.save(bookData, (error, data) => {
+            return (error) ? callback(error, null) : callback(null, data);
+        });
     }
 
 
@@ -25,31 +23,26 @@ class Bookservice {
      *  @param userId contains admin information
      */
     getBooks = (userId, callback) => {
-        console.log("ser")
         bookModel.getBooks(userId, (error, data) => {
-            console.log("data", data)
             return (error) ? callback(error, null) : callback(null, data);
         });
     }
 
 
     updateBook = (bookData, callback) => {
-        console.log("ser")
        return bookModel.update(bookData, (error, data) => {
             return (error) ? callback(error, null) : callback(null, data);
         });
     }
 
   
-    deleteBook = async (bookData, callback) => {
-        console.log("ser")
-       const data =await bookModel.delete(bookData)
-       console.log("data", data)
+    deleteBook = (bookData, callback) => {
+   
+      return bookModel.delete(bookData, (error, data) => {
+        return (error) ? callback(error, null) : callback(null, data);
+    })
     
-        // , (error, data) => {
-        //    console.log("err,", error)
-        //     return (error) ? callback(error, null) : callback(null, data);
-        // });
+    
     }
 
 
@@ -60,10 +53,6 @@ class Bookservice {
        const data = await bookModel.addToBag(bookData)
        console.log("data", data)
         return data
-        
-        // => {
-        //     return (error) ? callback(error, null) : callback(null, data);
-        // });
     }
 }
 

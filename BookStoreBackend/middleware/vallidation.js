@@ -127,9 +127,9 @@ class vallidation {
 
     registerValidation = (userData) => {
        const firstName = this.name(userData.firstName)
-       console.log("fn", firstName)
+   
           const  lastName = this.name(userData.lastName)
-          console.log("fn", lastName)
+     
           const  emailId = this.emailId(userData)
           const  password = this.password(userData.password)
           const  confirmPassword = this.password(userData.confirmPassword)
