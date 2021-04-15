@@ -27,7 +27,9 @@ class BookModel {
                     price: bookData.price,
                     image: bookData.image,
                     description: bookData.description,
-                    adminId: bookData.adminId
+                    adminId: bookData.adminId,
+                    isAddedToBag : false
+
                 }
                 const id = uuid();
                 console.log("id")

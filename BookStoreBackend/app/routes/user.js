@@ -25,7 +25,7 @@ module.exports = (app) => {
     app.post('/user-login', user.login);
 
     // admin login
-    app.post('/admin-login', user.login);
+    app.post('/admin-login',validate,user.login);
 
     
 };

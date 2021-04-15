@@ -140,8 +140,6 @@ class BookController {
     };
 
 
-
-
     /**
      * @message Update book with id
      * @method delete is service class method

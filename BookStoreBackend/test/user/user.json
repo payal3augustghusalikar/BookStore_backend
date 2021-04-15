@@ -1,0 +1,81 @@
+  {
+      "user": {
+          "registerUserProperData": {
+              "firstName": "Payal",
+              "lastName": "Payal",
+              "emailId": "ghusalikarpayal58@gmail.com",
+              "password": "AAAAAAA",
+              "confirmPassword": "AAAAAAA"
+          },
+          "NotregisterUserProperDatatoLogin": {
+              "emailId": "ghusalikar1apayal333333@gmail.com",
+              "password": "AAAAAAA"
+          },
+          "userWithEmptyFirstName": {
+              "firstName": "",
+              "lastName": "Payal",
+              "emailId": "ghusalikarapayal2@gmail.com",
+              "password": "AAAAAAA",
+              "confirmPassword": "AAAAAAA"
+          },
+
+          "userWithEmptyLastName": {
+              "firstName": "Payal",
+              "lastName": "",
+              "emailId": "ghusalikarapayal2@gmail.com",
+              "password": "AAAAAAA",
+              "confirmPassword": "AAAAAAA"
+          },
+          "userWithImproperEmail": {
+              "firstName": "Payal",
+              "lastName": "Payal",
+              "emailId": "ghusalikarapayal2gmail.com",
+              "password": "AAAAAAA",
+              "confirmPassword": "AAAAAAA"
+          },
+          "userWithEmptyEmail": {
+              "firstName": "Payal",
+              "lastName": "Payal",
+              "emailId": "",
+              "password": "AAAAAAA",
+              "confirmPassword": "AAAAAAA"
+          },
+          "userWithThan3CharInName": {
+              "firstName": "Pa",
+              "lastName": "Payal",
+              "emailId": "ghusalikarapayal2@gmail.com",
+              "password": "AAAAAAA",
+              "confirmPassword": "AAAAAAA"
+          },
+          "PasswordAndConfirmPasswordNotSame": {
+              "firstName": "Pay",
+              "lastName": "Payal",
+              "emailId": "ghusalikarapayal5555@gmail.com",
+              "password": "AAAAAAA",
+              "confirmPassword": ""
+          },
+
+          "loginUserProperData": {
+            "emailId": "ghusalikarpayal58@gmail.com",
+            "password": "AAAAAAA"
+          },
+          "loginUserImproperData": {
+              "emailId": "zzzz@gmail.com",
+              "password": ""
+          },
+          "loginUserEmptyEmail": {
+              "emailId": "",
+              "password": "Ghjjjjj"
+          },
+          "loginUserImproperEmail": {
+              "emailId": "ghusalikarapayal2",
+              "password": "Ghjjjjj"
+          },
+          "properToken": {
+              "token": ""
+          },
+          "ImproperToken": {
+              "token": "'JhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbElkIjoiZ2h1c2FsaWthcnBheWFsQGdtYWlsLmNvbSIsImlkIjoiNjAxOGRiOWM3MzU1YTkyM2I4OGFmM2UwIiwiaWF0IjoxNjEyMzgyMzg3LCJleHAiOjE2MTI0Njg3ODd9.6I8fMEnAS0_PpSMl5ixe0zPWhh0Vpx9QaNFQYShJLjA'"
+          }
+      }
+  }
