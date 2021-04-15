@@ -6,14 +6,13 @@
 -----------------------------------------------------------------------------------------------*/
 
 const userService = require("../services/user.js");
-//let vallidator = require("../../middleware/vallidation.js");
 const status = require("../../middleware/staticFile.json");
 const config = require('../../config').get();
 const { logger } = config;
-//const {body, checkSchema, validationResult} = require('express-validator');
-//const { check, validationResult } = require('express-validator')
+
 class userController {
-    /**
+    /** 
+     * @method register is service class method
      * @description register and save a new user
      * @param res is used to send the response
      */
@@ -24,33 +23,10 @@ class userController {
             let password = req.body.password;
             if (password !== confirmPassword) {
                 return res.send({
-
                     status_code: status.Bad_Request,
                     message: "Password not match",
                 });
             } else {
-
-
-                // const errors = validationResult(req)
-                // if (!errors.isEmpty()) {
-                //     console.log("err",errors.array())
-                //   return res.status(422).json({ errors: errors.array() })
-                // }
-
-
-
-
-            //     const result =  vallidator.validate('createUser');
-            //     var errors = validationResult(req).array();
-            //        console.log("errors",errors )
-            //    // console.log("result1",result )
-            //     console.log("result", result.array.map(i => `'${i.param}' has ${i.message}`).join(' ')
-            //     )
-            //    //const result1= vallidator.checkVallidation(req,res, next)
-            //      console.log("result1")
-
-             //  console.log(" req.getValidationResult()",  
-              // req.getValidationResult().then(validationHandler()))
                 const userInfo = {
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
@@ -59,7 +35,6 @@ class userController {
                     role: req.role
                 };
                 userService.register(userInfo, (error, data) => {
-                   
                     return error ?
                         res.send({
                             success: false,
@@ -68,7 +43,6 @@ class userController {
                         res.send({
                             status_code: status.Success,
                             message: "user added successfully !!",
-                        
                         });
                 })
             }
@@ -78,14 +52,13 @@ class userController {
                 success: false,
                 status_code: status.Internal_Server_Error,
                 message: "Some error occurred while creating user" + error
-
-
             });
         }
     };
 
 
     /**
+     * @method loign is service class method in which user input data is passed
      * @description User login API
      * @method login is service class method
      */
