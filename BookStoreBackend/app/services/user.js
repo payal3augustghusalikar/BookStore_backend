@@ -1,4 +1,3 @@
-
 /**
  * @module       services
  * @file         user.js
@@ -11,7 +10,9 @@ const User = require("../models/user.js");
 const helper = require("../../middleware/helper.js");
 const bcrypt = require("bcrypt");
 const config = require('../../config').get();
-const { logger } = config;
+const {
+    logger
+} = config;
 
 class userService {
 
@@ -53,7 +54,7 @@ class userService {
                 logger.error('ERR:401-Authorization failed');
                 return callback(new Error('ERR:401-Authorization failed'), null);
             } else {
-                bcrypt.compare(userLoginData.password, data[0]['user'].password, async(error, result) => {
+                bcrypt.compare(userLoginData.password, data[0]['user'].password, async (error, result) => {
                     if (result) {
                         logger.info('Authorization success');
                         const token = await helper.generateToken(data[0]);

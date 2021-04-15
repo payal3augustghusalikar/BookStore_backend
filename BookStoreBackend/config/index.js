@@ -1,13 +1,8 @@
 /**
  * @file index.js
- *
  * @description Index Configuration setup is required to run your server.
- *
  * @author  Payal <payal.ghusalikar9@gmail.com>
  -----------------------------------------------------------------------------------------------*/
-
-
-
  let config;
 
 /**

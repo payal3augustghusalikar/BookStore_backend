@@ -49,13 +49,13 @@ class Bookservice {
         });
     }
 
-/**
- * @description delete a book by its id
- * @param {*} bookData holds user input data
- * @param {*} callback is for controller class method
- * @method delete is models class method
- * @returns callback
- */
+    /**
+     * @description delete a book by its id
+     * @param {*} bookData holds user input data
+     * @param {*} callback is for controller class method
+     * @method delete is models class method
+     * @returns callback
+     */
     deleteBook = (bookData, callback) => {
         return bookModel.delete(bookData, (error, data) => {
             return (error) ? callback(error, null) : callback(null, data);

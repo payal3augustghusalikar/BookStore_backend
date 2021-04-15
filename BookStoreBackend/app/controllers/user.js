@@ -1,10 +1,11 @@
-/* @module        controllers
- * @file          user.js
- * @description  controllers takes request and send the response   
+/**
+ * @module       controllers
+ * @file         user.js
+ * @description  controller class holds request and sends response 
  * @author       Payal Ghusalikar <payal.ghusalikar9@gmail.com>
- *  @since        4/04/2021  
-* 
+ * @since        4/04/2021  
 -----------------------------------------------------------------------------------------------*/
+
 
 const userService = require("../services/user.js");
 const status = require("../../middleware/staticFile.json");
@@ -112,6 +113,5 @@ class userController {
         }
     }
 }
-
 
 module.exports = new userController();
