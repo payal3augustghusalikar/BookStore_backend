@@ -19,13 +19,24 @@ const userValidationRules = () => {
     body('emailId').isEmail().exists().withMessage('must be at least 5 chars long')
                .matches(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
                  .withMessage('must contain a number'),
-  //password must be at least 5 chars long
+  //password must be at least 6 chars long
     body('password').isLength({
       min: 6
     }),
   ]
 }
-
+const loginUserValidationRules = () => {
+  return [
+    // username must be an email
+    body('emailId').isEmail().exists().withMessage('must be at least 5 chars long')
+               .matches(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+                 .withMessage('must contain a number'),
+  //password must be at least 6 chars long
+    body('password').isLength({
+      min: 6
+    }),
+  ]
+}
 const bookValidationRules = () => {
   return [
 
@@ -69,5 +80,6 @@ const validate = (req, res, next) => {
 module.exports = {
   userValidationRules,
   bookValidationRules,
+  loginUserValidationRules,
   validate,
 }

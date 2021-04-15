@@ -43,17 +43,7 @@ describe("Register", () => {
                 done();
             });
     });
-    // it("givenUser_whenGivenDuplicateData_shouldNotSaveUser", (done) => {
-    //     let userInfo = userData.user.registerUserProperData;
-    //     chai
-    //         .request(server)
-    //         .post("/user-register")
-    //         .send(userInfo)
-    //         .end((err, res) => {
-    //             res.should.have.status(500);
-    //             done();
-    //         });
-    // });
+  
     it("givenUser_whenGivenImproperData_shouldNotSaveUser", (done) => {
         let userInfo = userData.user.userWithEmptyFirstName;
         chai
@@ -152,7 +142,7 @@ describe("Login", () => {
             .post("/user-login")
             .send(userInfo)
             .end((err, res) => {
-                res.should.have.status(400);
+                res.should.have.status(422);
                 res.body.should.be.a("object");
                 done();
             });
@@ -164,7 +154,7 @@ describe("Login", () => {
             .post("/user-login")
             .send(userInfo)
             .end((err, res) => {
-                res.should.have.status(400);
+                res.should.have.status(422);
                 res.body.should.be.a("object");
                 done();
             });
@@ -177,7 +167,7 @@ describe("Login", () => {
             .post("/user-login")
             .send(userInfo)
             .end((err, res) => {
-                res.should.have.status(400);
+                res.should.have.status(422);
                 res.body.should.be.a("object");
                 done();
             });

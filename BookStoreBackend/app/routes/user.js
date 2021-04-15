@@ -8,7 +8,7 @@
 
 var helper = require("../../middleware/helper.js");
 //const {body, checkSchema, validationResult} = require('express-validator');
-const { userValidationRules, validate } = require('../../middleware/vallidation')
+const { userValidationRules, loginUserValidationRules,  validate } = require('../../middleware/vallidation')
 //let vallidator = require("../../middleware/vallidation.js");
 const user = require("../controllers/user.js");
 
@@ -22,10 +22,10 @@ module.exports = (app) => {
     app.post("/admin-register", helper.addRole('admin'), userValidationRules(), validate, user.register);
 
     // user login
-    app.post('/user-login', user.login);
+    app.post('/user-login',  loginUserValidationRules(), validate, user.login);
 
     // admin login
-    app.post('/admin-login',validate,user.login);
+    app.post('/admin-login', loginUserValidationRules(), validate,user.login);
 
     
 };
