@@ -11,8 +11,10 @@ const app = express();
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 var jwt = require('jsonwebtoken');
- const config = require("../config").get();
- const { logger } = config;
+const config = require("../config").get();
+const {
+    logger
+} = config;
 
 class Helper {
 
@@ -29,17 +31,17 @@ class Helper {
         }
     };
 
-/**
- * @description encypted user password
- * @param {*} password contains user input field
- * @param {*} callback is for service class method
- */
+    /**
+     * @description encypted user password
+     * @param {*} password contains user input field
+     * @param {*} callback is for service class method
+     */
     encryptPassword = (password, callback) => {
         bcrypt.hash(password, 10, (err, hash) => {
-                if (err)
-                    return callback(err, null);
-                return callback(null, hash);
-            })
+            if (err)
+                return callback(err, null);
+            return callback(null, hash);
+        })
     }
 
     /**
@@ -58,30 +60,47 @@ class Helper {
         return token;
     }
 
-/**
- * @description verify user role i.e admin/user
- * @param {*} req takes token from header
- * @param {*} res sends response 
- * @param {*} next 
- * @returns 
- */
+    /**
+     * @description verify user role i.e admin/user
+     * @param {*} req takes token from header
+     * @param {*} res sends response 
+     * @param {*} next 
+     * @returns 
+     */
     verifyRole = (req, res, next) => {
-        const token =   req.headers.authorization.split(" ")[1];
+       try {
+        const token = req.headers.authorization.split(" ")[1];
         if (token === undefined) {
             logger.error('Incorrect token or token is expired');
-            return res.status(401).send({ success: false, message: 'Incorrect token or token is expired' });
+            return res.status(401).send({
+                success: false,
+                message: 'Incorrect token or token is expired'
+            });
         }
         return jwt.verify(token, process.env.SECRET_KEY, (error, decodeData) => {
             if (error) {
                 logger.error('Incorrect token or token is expired');
-                return res.status(401).send({ success: false, message: 'Incorrect token or token is expiredd ', error });
+                return res.status(401).send({
+                    success: false,
+                    message: 'Incorrect token or token is expiredd ',
+                    error
+                });
             } else if (decodeData.role != 'admin') {
                 logger.error('Authorization failed');
-                return res.status(401).send({ success: false, message: 'Authorization failed' });
+                return res.status(401).send({
+                    success: false,
+                    message: 'Authorization failed'
+                });
             }
             req.decodeData = decodeData;
             next();
         });
+       } catch(error) {
+        return res.status(401).send({
+            success: false,
+            message: 'some error occured '+ error
+        }); 
+       }  
     }
 
     /**
@@ -93,24 +112,32 @@ class Helper {
      */
     verifyToken = (req, res, next) => {
         try {
-            const token =   req.headers.authorization.split(" ")[1];
+            const token = req.headers.authorization.split(" ")[1];
             if (token === undefined) {
                 logger.error('Incorrect token or token is expired');
-                return res.status(401).send({ success: false, message: 'Incorrect token or token is expired' });
+                return res.status(401).send({
+                    success: false,
+                    message: 'Incorrect token or token is expired'
+                });
             }
             return jwt.verify(token, process.env.SECRET_KEY, (error, decodeData) => {
-            if (error) {
+                if (error) {
                     logger.error('Incorrect token or token is expired');
-                    return res.status(401).send({ success: false, message: 'Incorrect token or token is expired' });
+                    return res.status(401).send({
+                        success: false,
+                        message: 'Incorrect token or token is expired'
+                    });
                 }
                 req.decodeData = decodeData;
                 next();
             });
-        } catch{
-            return res.status(401).send({ success: false, message: 'some error occured'});
+        } catch {
+            return res.status(401).send({
+                success: false,
+                message: 'some error occured'
+            });
         }
-        
-	}
+    }
 }
 
 module.exports = new Helper();

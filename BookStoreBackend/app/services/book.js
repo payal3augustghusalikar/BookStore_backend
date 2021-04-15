@@ -57,7 +57,9 @@ class Bookservice {
      * @returns callback
      */
     deleteBook = (bookData, callback) => {
+        console.log("ser")
         return bookModel.delete(bookData, (error, data) => {
+            console.log("sersdat", data)
             return (error) ? callback(error, null) : callback(null, data);
         })
     }

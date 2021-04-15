@@ -116,23 +116,44 @@ class BookModel {
      * @method userBucket.get is used to get user associated with book
      * @method bookBucket.remove is used to remove book from db
      */
-    delete = async (bookData, callback) => {
-        userBucket.get(bookData.adminId)
-        if (error)
-            return callback(error, null);
-        else if (user.length == 0)
-            return callback(new Error('ERR-401 not found'), null);
-        else {
-            await bookBucket.get(bookData.bookId)
-            if (error)
+    delete = (bookData, callback) => {
+        console.log("bookData.adminId", bookData.adminId)
+        userBucket.get(bookData.adminId, (error, user) => {
+            console.log("user", user)
+            if (error) {
+
+                console.log("err", error)
                 return callback(error, null);
-            else if (books.length == 0)
-                return callback(null, books);
-            else {
-                const data = bookBucket.remove(bookData.bookId)
-                return data
+            } else if (user.length == 0)
+                return callback(new Error('ERR-401 not found'), null);
+            else if (user) {
+                bookBucket.get(bookData.bookId, (error, book) => {
+                    console.log("book", book)
+                    if (error) {
+                        console.log("err", error)
+                        return callback(error, null);
+                    } else if (book.length == 0)
+                    {   console.log("books.length", books.length)
+                        return callback(null, book);
+                    }
+                    else {
+                        console.log("remove")
+                        bookBucket.remove(bookData.bookId, (error, data) => {
+                           
+                            if (error) {
+                                console.log("err1", error)
+                                return callback(error, null);
+                            } 
+                                else if (data) {
+                                    console.log("dtaa", data)
+                                    return callback(null, data);
+                                }
+                            
+                        })
+                    }
+                })
             }
-        }
+        })
     }
 
     /**
