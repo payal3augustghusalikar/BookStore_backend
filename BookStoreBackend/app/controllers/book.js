@@ -198,49 +198,6 @@ class BookController {
         }
     }
 
-
-    // delete = async(req, res) => {
-    //     try {
-    //         const bookData = {
-    //             bookId: req.params.bookId,
-    //             adminId: req.decodeData.userId
-    // 		};
-    //         let data = await bookService.deleteBook(bookData);
-    //         return !data
-    //             ? 
-    //             (logger.warn("book not found with id " + req.params.bookId),
-    //                 res.send({
-    //                     status_code: status.Not_Found,
-    //                     message: "book not found with id "+ req.params.bookId,
-    //                 })) :
-    //             res.send({
-    //                 status_code: status.Success,
-    //                 message: "book deleted successfully!",
-    //             });
-    //         // error(
-    //         //     logger.warn("book not found with id" + req.params.bookId),
-    //         //     res.send({
-    //         //         status_code: status.Not_Found,
-    //         //         message: "book not found with id " + req.params.bookId,
-    //         //     }) 
-    //         // )     
-    //     } catch (error) {
-    //         return (
-    //             error.kind === "ObjectId" || error.name === "NotFound" ?
-    //             (logger.error("could not found book with id" + req.params.bookId),
-    //                 res.send({
-    //                     status_code: status.Not_Found,
-    //                     message: "book not found with id" + error + req.params.bookId,
-    //                 })) :
-    //             logger.error("Could not delete book with id" + error + req.params.bookId),
-    //             res.send({
-    //                 status_code: status.Internal_Server_Error,
-    //                 message: "Could not delete book with id " + error + req.params.bookId,
-    //             })
-    //         );
-    //     }
-    // };
-
     /**
      * @description add to bag book by making isAddedToBag flag to true
      * @method addToBag is service class method holds addToBagData
