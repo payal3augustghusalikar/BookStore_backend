@@ -3,7 +3,7 @@
  * @file         test.js
  * @description  test the all routes for crud operation
  * @author       Payal Ghusalikar <payal.ghusalikar9@gmail.com>
-*  @date         2/01/2021
+*  @date         05/04/2021
 -----------------------------------------------------------------------------------------------*/
 
 let chai = require("chai");
@@ -12,10 +12,8 @@ let server = require("../../server");
 chai.use(chaiHttp);
 const bookData = require("./books.json");
 const should = require("should");
-
 chai.should;
 const token = bookData.books.properToken.token;
-//console.log("token", bookData)
 
 describe("books API", () => {
     /**
@@ -31,9 +29,6 @@ describe("books API", () => {
                 .get("/books")
                 .set("Authorization", token)
                 .end((err, res) => {
-                  //  console.log("responce :", res);
-                    console.log("error :", err);
-
                     done();
                 });
         });
@@ -52,7 +47,6 @@ describe("books API", () => {
         });
     });
 
-   
     /**
      * @description Test the POST API
      */
@@ -66,7 +60,6 @@ describe("books API", () => {
                 .post("/book/")
                 .set("Authorization", token)
                 .send(book)
-
                 .end((error, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a("object");
@@ -82,13 +75,13 @@ describe("books API", () => {
                 .post("/book/")
                 .set("Authorization", token)
                 .send(book)
-
                 .end((error, res) => {
                     res.should.have.status(422);
                     res.body.should.be.a("object");
                     done();
                 });
         });
+
         it("givenbooks_WhenNotGivenQuantityAndPriceInInteger_ShouldNotPostbook", (done) => {
             const book = bookData.books.bookWithoutIntegerValueForQuantity;
             const token = bookData.books.properToken.token;
@@ -97,7 +90,6 @@ describe("books API", () => {
                 .post("/book/")
                 .set("Authorization", token)
                 .send(book)
-
                 .end((error, res) => {
                     res.should.have.status(422);
                     res.body.should.be.a("object");
@@ -175,7 +167,6 @@ describe("books API", () => {
                 .put("/book/" + bookId)
                 .set("Authorization", token)
                 .send(book)
-
                 .end((err, res) => {
                     res.should.have.status(200);
                     console.log("res Body:", res.body);
@@ -183,6 +174,7 @@ describe("books API", () => {
                     done();
                 });
         });
+
         // test the PUT API when provided improper Id
         it("givenbooks_WhenGivenImropertitle_ShouldNotUpdatebook", (done) => {
             const bookId = bookData.books.bookWithouttitle.bookId;
@@ -192,13 +184,12 @@ describe("books API", () => {
                 .put("/book/" + bookId)
                 .set("Authorization", token)
                 .send(book)
-
                 .end((err, res) => {
                     res.should.have.status(422);
-
                     done();
                 });
         });
+
         it("givenbooks_WhenGivenImropertitle_ShouldNotUpdatebook", (done) => {
             const bookId = bookData.books.bookWithEmptytitle.bookId;
             const book = bookData.books.bookWithEmptytitle;
@@ -209,10 +200,10 @@ describe("books API", () => {
                 .send(book)
                 .end((err, res) => {
                     res.should.have.status(422);
-
                     done();
                 });
         });
+
         it("givenbooks_WhenGivenImroperdescription_ShouldNotUpdatebook", (done) => {
             const bookId = bookData.books.bookWithImproperdescription.bookId;
             const book = bookData.books.bookWithImproperdescription;
@@ -231,13 +222,11 @@ describe("books API", () => {
     describe("/PUT  /book/addtobag/:bookId", () => {
         it("givenbooks_WhenGivenProperbookIdandLabelId_ShouldaddbookToBag", (done) => {
             const bookId = bookData.books.bookToUpdate.bookId;
-
             chai
                 .request(server)
                 .put("/book/addtobag/" + bookId)
                 .set("Authorization", token)
                 .send(bookId)
-
                 .end((err, res) => {
                     res.should.have.status(200);
                     console.log("res Body:", res.body);
@@ -245,17 +234,14 @@ describe("books API", () => {
                     done();
                 });
         });
-
 
         it("givenbooks_WhenGivenProperbookIdandLabelId_ShouldNotbookToBag", (done) => {
             const bookId = bookData.books.bookToUpdate.improperId;
-
             chai
                 .request(server)
                 .put("/book/addtobag/" + bookId)
                 .set("Authorization", token)
                 .send(bookId)
-
                 .end((err, res) => {
                     res.should.have.status(200);
                     console.log("res Body:", res.body);
@@ -263,11 +249,7 @@ describe("books API", () => {
                     done();
                 });
         });
-
-        
     });
-
-
 
     describe("DELETE /books/bookID", function () {
         it("givenbooks_WhenGivenProperId_ShouldDelete_book", (done) => {

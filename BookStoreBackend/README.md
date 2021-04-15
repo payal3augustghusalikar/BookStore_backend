@@ -1,4 +1,7 @@
 # Book Store Backend
+this is book store app in which user/admin can register and login.
+admin can add, get, update, an delete a book.
+user can get , add  to bag a book.
 
 Prerequisites
  need to install Node.js along with access to NPM. To check, open your terminal and type:

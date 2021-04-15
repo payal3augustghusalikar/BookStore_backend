@@ -1,26 +1,27 @@
+/**
+ * @module       controllers
+ * @file         book.js
+ * @description  controller class holds request and sends response 
+ * @author       Payal Ghusalikar <payal.ghusalikar9@gmail.com>
+ * @since        4/04/2021  
+-----------------------------------------------------------------------------------------------*/
+
 const bookService = require('../services/book.js');
 const userService = require("../services/user.js");
-//let vallidator = require("../../middleware/vallidation.js");
 const status = require("../../middleware/staticFile.json");
 const config = require('../../config').get();
 const {
     logger
 } = config;
-const {
-    body,
-    checkSchema,
-    validationResult
-} = require('express-validator');
-
 
 class BookController {
+
     /**
      * @description add new book to book-store
-     * @method register is a service class method
-     * 
+     * @method addBook is a service class method
+     * @param {req, res}
      */
     addBook = (req, res) => {
-      
         try {
             const bookData = {
                 author: req.body.author,
@@ -31,7 +32,6 @@ class BookController {
                 image: req.body.image,
                 adminId: req.decodeData.userId
             }
-
             bookService.addBook(bookData)
                 .then((data) => {
                     logger.info("Book added successfully !"),
@@ -57,6 +57,12 @@ class BookController {
         }
     }
 
+    /**
+     * @description find all books in database
+     * @method getBooks is service class method 
+     * @param {*} req holds user input
+     * @param {*} res sends responce with data coming from Database
+     */
     findAllBooks = (req, res) => {
         try{
             const userId = req.decodeData.userId;
@@ -68,7 +74,6 @@ class BookController {
                     logger.error('Books not found');
                     return res.status(404).send({ success: false, message: 'Books not found' });
                 }
-              
                 logger.info('Successfully retrieved books !');
                 return res.status(200).send({ success: true, message: 'Successfully retrieved books !', data: data});
             });
@@ -80,9 +85,9 @@ class BookController {
     }
 
 
-
     /**
-     * @message Update book by id
+     *
+     * @description update book in database
      * @method update is service class method
      * @param res is used to send the response
      */
@@ -98,9 +103,7 @@ class BookController {
                 price: req.body.price,
                 description: req.body.description,
                 adminId: req.decodeData.userId,
-              //  addedToBag: false
             };
-          
                 bookService.updateBook(bookInfo, (error, data) => {
                     return (
                         error ?
@@ -141,20 +144,18 @@ class BookController {
 
 
     /**
-     * @message Update book with id
+     * @description delete book with id
      * @method delete is service class method
      * @param response is used to send the response
      */
     delete = async(req, res) => {
-    
         try {
             const bookData = {
                 bookId: req.params.bookId,
                 adminId: req.decodeData.userId
 			};
-         
             let data = await bookService.deleteBook(bookData);
-            !data
+            return !data
                 ? 
                 (logger.warn("book not found with id " + req.params.bookId),
                     res.send({
@@ -165,14 +166,13 @@ class BookController {
                     status_code: status.Success,
                     message: "book deleted successfully!",
                 });
-            error(
-                logger.warn("book not found with id" + req.params.bookId),
-                res.send({
-                    status_code: status.Not_Found,
-                    message: "book not found with id " + req.params.bookId,
-                }) 
-            )
-                
+            // error(
+            //     logger.warn("book not found with id" + req.params.bookId),
+            //     res.send({
+            //         status_code: status.Not_Found,
+            //         message: "book not found with id " + req.params.bookId,
+            //     }) 
+            // )     
         } catch (error) {
             return (
                 error.kind === "ObjectId" || error.name === "NotFound" ?
@@ -190,36 +190,35 @@ class BookController {
         }
     };
 
-
-
+/**
+ * @description add to bag book by making isAddedToBag flag to true
+ * @method addToBag is service class method holds addToBagData
+ * @param {*} req 
+ * @param {*} res 
+ */
     addToBag = (req, res) => {
         try {
-           
             const addToBagData = {
                 bookId: req.params.bookId, 
                 adminId: req.decodeData.userId,
-              //  isAddedToBag : true
             };
             bookService
                 .addToBag(addToBagData)
                 .then((data) => {
                     if (!data) {
-                        res.send({
+                       return res.send({
                             success: false,
                             status_code: status.Not_Found,
                             message: "book not found with id : " + req.params.bookId + error,
                         });
                     }
-                    res.send({
-                     
+                  return res.send({
                         status: status.Success,
                         message: " added to bag successfully !",
-                      //  data: data,
                     });
                 })
                 .catch((error) => {
-                    res.send({
-                      
+                    return res.send({
                         status: status.Internal_Server_Error,
                         message: "Some error occurred while adding to bag" + error,
                     });
@@ -227,13 +226,11 @@ class BookController {
         } catch (error) {
             logger.error("Some error occurred while adding to bag"),
                 res.send({
-                 
                     status: status.Internal_Server_Error,
                     message: "Some error occurred while adding to bag" + error,
                 });
         }
     };
 }
-
 
 module.exports = new BookController();

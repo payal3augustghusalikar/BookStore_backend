@@ -3,12 +3,11 @@
  * @file         test.js
  * @description  test the all routes for user api
  * @author       Payal Ghusalikar <payal.ghusalikar9@gmail.com>
-*  @date         2/01/2021
+*  @date         05/04/2021
 -----------------------------------------------------------------------------------------------*/
 
 let chai = require("chai");
 let chaiHttp = require("chai-http");
-
 let server = require("../../server");
 chai.use(chaiHttp);
 const userData = require("./user.json");
@@ -29,6 +28,7 @@ describe("Register", () => {
                 done();
             });
     });
+
     it("givenUser_whenGivenProperData_shouldSaveUser", (done) => {
         let userInfo = userData.user.registerUserProperData;
         console.log("userInfo: " + userInfo);
@@ -37,7 +37,6 @@ describe("Register", () => {
             .post("/admin-register")
             .send(userInfo)
             .end((err, res) => {
-                //   console.log("body : " + res.body);
                 res.should.have.status(200);
               //  res.body.should.be.a("array");
                 done();
@@ -81,6 +80,7 @@ describe("Register", () => {
                 done();
             });
     });
+
     it("givenUser_whenGivenEmptyEmail_shouldNotSaveUser", (done) => {
         let userInfo = userData.user.userWithEmptyEmail;
         chai
@@ -147,6 +147,7 @@ describe("Login", () => {
                 done();
             });
     });
+    
     it("givenUser_whenGivenImproperData_shouldNotRespondsWithJson", (done) => {
         let userInfo = userData.user.loginUserImproperData;
         chai

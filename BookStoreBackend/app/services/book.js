@@ -1,3 +1,11 @@
+/**
+ * @module       services
+ * @file         book.js
+ * @description  service class holds all logical methods 
+ * @author       Payal Ghusalikar <payal.ghusalikar9@gmail.com>
+ * @since        4/04/2021  
+-----------------------------------------------------------------------------------------------*/
+
 const bookModel = require('../models/book');
 
 class Bookservice {
@@ -6,12 +14,11 @@ class Bookservice {
      * @description calling model class method to add new book to book store
      * @method save is model class method
      * @param {*} bookData holds book information
-     * @param {*} callback 
+     * @param {*} callback is for controller class methods
      * @returns callback function
      */
-      addBook = (bookData, callback) => {
-        console.log("ser")
-       return bookModel.save(bookData, (error, data) => {
+    addBook = (bookData, callback) => {
+        return bookModel.save(bookData, (error, data) => {
             return (error) ? callback(error, null) : callback(null, data);
         });
     }
@@ -19,8 +26,9 @@ class Bookservice {
 
     /**
      * @description add new book to bookstore
-     *  @method getBooks is a model class method
-     *  @param userId contains admin information
+     * @method getBooks is a model class method
+     * @param userId contains admin information
+     * @param {*} callback is for controller class methods
      */
     getBooks = (userId, callback) => {
         bookModel.getBooks(userId, (error, data) => {
@@ -28,23 +36,41 @@ class Bookservice {
         });
     }
 
+    /**
+     * @description update a book by id
+     * @method update is model class methodholds bookdata
+     * @param {*} bookData holds user input update data 
+     * @param {*} callback is for controller class methods
+     * @returns callback
+     */
     updateBook = (bookData, callback) => {
-       return bookModel.update(bookData, (error, data) => {
+        return bookModel.update(bookData, (error, data) => {
             return (error) ? callback(error, null) : callback(null, data);
         });
     }
 
-
+/**
+ * @description delete a book by its id
+ * @param {*} bookData holds user input data
+ * @param {*} callback is for controller class method
+ * @method delete is models class method
+ * @returns callback
+ */
     deleteBook = (bookData, callback) => {
-      return bookModel.delete(bookData, (error, data) => {
-        return (error) ? callback(error, null) : callback(null, data);
-    })
+        return bookModel.delete(bookData, (error, data) => {
+            return (error) ? callback(error, null) : callback(null, data);
+        })
     }
 
-    addToBag =  async(bookData) => {
+    /**
+     *  @description add a book to bag by making isAddedToBag flag true
+     * @param {*} bookData 
+     * @returns data
+     */
+    addToBag = async (bookData) => {
         console.log("ser")
-       const data = await bookModel.addToBag(bookData)
-       console.log("data", data)
+        const data = await bookModel.addToBag(bookData)
+        console.log("data", data)
         return data
     }
 }

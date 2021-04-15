@@ -1,8 +1,6 @@
 /**
  * @file production.js
- *
  * @description Production file is the default setup expected to have on a localmachine to work with the Production config
- *
  * @author  Payal <payal.ghusalikar9@gmail.com>
  * @version : 1.0
  -----------------------------------------------------------------------------------------------*/
